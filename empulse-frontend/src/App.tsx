@@ -1,21 +1,31 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import SplashPage from './pages/SplashPage'
+import RoleSelectPage from './pages/RoleSelectPage'
 import FingerprintPage from './pages/FingerprintPage'
-import FeedbackPage from './pages/FeedbackPage'
-import SuccessPage from './pages/SuccessPage'
-import HRDashboard from './pages/HRDashboard'
-import LandingPage from './pages/LandingPage'
+import PINLoginPage from './pages/PINLoginPage'
+import EmployeeDashboard from './pages/employee/EmployeeDashboard'
+import RaiseComplaint from './pages/employee/RaiseComplaint'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import ComplaintDetail from './pages/admin/ComplaintDetail'
+import HRDashboard from './pages/hr/HRDashboard'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/verify" element={<FingerprintPage />} />
-        <Route path="/feedback" element={<FeedbackPage />} />
-        <Route path="/success" element={<SuccessPage />} />
-        <Route path="/dashboard" element={<HRDashboard />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/role" element={<RoleSelectPage />} />
+          <Route path="/verify" element={<FingerprintPage />} />
+          <Route path="/pin-login" element={<PINLoginPage />} />
+          <Route path="/employee" element={<EmployeeDashboard />} />
+          <Route path="/employee/raise" element={<RaiseComplaint />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/complaint/:id" element={<ComplaintDetail />} />
+          <Route path="/hr" element={<HRDashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
