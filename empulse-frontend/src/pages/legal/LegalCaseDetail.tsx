@@ -448,6 +448,22 @@ export default function LegalCaseDetail() {
                     <p className="text-sm text-amber-700">{localCase.aiReport.disclaimer}</p>
                   </div>
                 </div>
+
+                {/* Download / Print Report */}
+                <div className="flex gap-3 mt-4">
+                  <button
+                    onClick={() => window.print()}
+                    className="btn-primary flex items-center gap-2"
+                  >
+                    📥 Download Report (PDF)
+                  </button>
+                  <button
+                    onClick={() => window.print()}
+                    className="btn-outline flex items-center gap-2"
+                  >
+                    🖨️ Print Report
+                  </button>
+                </div>
               </div>
             )}
           </>

@@ -188,12 +188,20 @@ export default function HRDashboard() {
                           <StatusBadge status={c.status} size="sm" />
                         </div>
                         <p className="text-latte-500 text-sm line-clamp-2 mb-3">{c.text}</p>
-                        <button
-                          onClick={() => resolveComplaint(c.id)}
-                          className="text-xs px-4 py-2 bg-green-50 text-green-600 border border-green-200 rounded-xl hover:bg-green-100 font-medium transition-colors"
-                        >
-                          ✓ Mark Resolved
-                        </button>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => resolveComplaint(c.id)}
+                            className="text-xs px-4 py-2 bg-green-50 text-green-600 border border-green-200 rounded-xl hover:bg-green-100 font-medium transition-colors"
+                          >
+                            ✓ Mark Resolved
+                          </button>
+                          <button
+                            onClick={() => navigate('/legal')}
+                            className="text-xs px-4 py-2 bg-purple-50 text-purple-600 border border-purple-200 rounded-xl hover:bg-purple-100 font-medium transition-colors"
+                          >
+                            ⚖️ Forward to Legal
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>

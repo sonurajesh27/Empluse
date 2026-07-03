@@ -156,6 +156,9 @@ export default function AdminDashboard() {
           <button onClick={() => navigate('/admin/production')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
             <Factory size={12} /> Production
           </button>
+          <button onClick={() => navigate('/admin/incidents')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
+            <AlertTriangle size={12} /> Incidents
+          </button>
         </div>
         {/* Tab bar */}
         <div className="flex gap-1 mt-3 max-w-3xl mx-auto bg-latte-800 rounded-xl p-1">
