@@ -226,16 +226,18 @@ export default function AdminDashboard() {
             <h2 className="font-semibold text-latte-900 mb-1">Sector Heatmap</h2>
             <p className="text-latte-400 text-xs mb-4">Open issues per sector — click to filter queue</p>
             <div className="grid grid-cols-2 gap-3">
-              {SECTORS.map((s) => {
+              {SECTORS.map((s, i) => {
                 const count = sectorCounts[s] ?? 0
                 return (
                   <button
                     key={s}
                     onClick={() => { setFilterSector(s); setTab('queue') }}
-                    className={`p-4 rounded-2xl border-2 text-left hover:shadow-md active:scale-95 transition-all ${heatColor(count)}`}
+                    className={`p-4 rounded-2xl border-2 text-left hover:shadow-md active:scale-95 transition-all card-hover
+                      animate-fade-in-up stagger-${(i % 8) + 1} ${heatColor(count)}
+                      ${count >= 4 ? 'animate-critical-pulse' : ''}`}
                   >
                     <p className="font-semibold text-sm">{s}</p>
-                    <p className="text-2xl font-bold mt-1">{count}</p>
+                    <p className="text-2xl font-bold mt-1 number-animate">{count}</p>
                     <p className="text-xs opacity-70">open issues</p>
                   </button>
                 )
@@ -316,8 +318,8 @@ export default function AdminDashboard() {
 
 function StatBox({ label, value, bg, color }: { label: string; value: number; bg: string; color: string }) {
   return (
-    <div className={`${bg} rounded-2xl p-4 text-center`}>
-      <p className={`text-2xl font-bold ${color}`}>{value}</p>
+    <div className={`${bg} rounded-2xl p-4 text-center animate-fade-in-up card-hover`}>
+      <p className={`text-2xl font-bold ${color} number-animate`}>{value}</p>
       <p className="text-latte-500 text-xs mt-0.5">{label}</p>
     </div>
   )
