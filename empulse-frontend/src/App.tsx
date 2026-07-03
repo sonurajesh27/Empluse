@@ -6,6 +6,7 @@ import FingerprintPage from './pages/FingerprintPage'
 import PINLoginPage from './pages/PINLoginPage'
 import EmployeeDashboard from './pages/employee/EmployeeDashboard'
 import RaiseComplaint from './pages/employee/RaiseComplaint'
+import ReportLegal from './pages/employee/ReportLegal'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import ComplaintDetail from './pages/admin/ComplaintDetail'
 import RegisterEmployee from './pages/admin/RegisterEmployee'
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/pin-login" element={<PINLoginPage />} />
           <Route path="/employee" element={<EmployeeDashboard />} />
           <Route path="/employee/raise" element={<RaiseComplaint />} />
+          <Route path="/employee/report-legal" element={<ReportLegal />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/complaint/:id" element={<ComplaintDetail />} />
           <Route path="/admin/register" element={<RegisterEmployee />} />

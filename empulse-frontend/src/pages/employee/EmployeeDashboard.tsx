@@ -160,6 +160,14 @@ export default function EmployeeDashboard() {
             >
               <Plus size={20} /> {t('employee.raiseIssue')}
             </button>
+
+            {/* Report serious issue — goes directly to Legal */}
+            <button
+              onClick={() => navigate('/employee/report-legal')}
+              className="w-full py-3 bg-purple-50 text-purple-700 border border-purple-200 rounded-xl text-sm font-medium hover:bg-purple-100 transition-colors flex items-center justify-center gap-2"
+            >
+              ⚖️ Report Serious Issue (Harassment, Discrimination, Theft)
+            </button>
           </>
         )}
 
