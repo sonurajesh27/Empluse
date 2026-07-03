@@ -192,6 +192,116 @@ export default function OwnerDashboard() {
                 <p>• Welding sector health at <strong>1.9/5</strong> — lowest this month. Intervention recommended.</p>
               </div>
             </div>
+
+            {/* ═══ AI STRATEGIC INSIGHTS ═══ */}
+            <div className="card border-2 border-latte-200">
+              <div className="flex items-center gap-2 mb-4">
+                <BrainCircuit className="w-5 h-5 text-latte-700" />
+                <p className="text-base font-bold text-espresso">AI Strategic Insights</p>
+              </div>
+
+              {/* Q1: Highest attrition risk department */}
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-3">
+                <p className="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">🔴 Highest Attrition Risk</p>
+                <p className="text-lg font-bold text-red-800">Welding Sector</p>
+                <p className="text-sm text-red-700 mt-1">
+                  40% chance of losing 3+ workers within 14 days. Risk factors: 5 unresolved safety complaints, 
+                  120hr avg response time, supervisor score 2.1/5.
+                </p>
+                <div className="mt-2 flex gap-2">
+                  <span className="tag bg-red-100 text-red-700">Risk Score: 87</span>
+                  <span className="tag bg-red-100 text-red-700">5 open issues</span>
+                </div>
+              </div>
+
+              {/* Q2: Why employees are dissatisfied */}
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-3">
+                <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-1">📊 Root Cause of Dissatisfaction</p>
+                <p className="text-sm font-bold text-amber-800 mb-2">Top drivers this month:</p>
+                <div className="space-y-2">
+                  {[
+                    { cause: 'Supervisor behaviour', pct: 45, color: 'bg-red-400' },
+                    { cause: 'Safety concerns (equipment, hazards)', pct: 30, color: 'bg-orange-400' },
+                    { cause: 'Facility issues (bathroom, canteen)', pct: 15, color: 'bg-amber-400' },
+                    { cause: 'Pay & HR (salary, leaves)', pct: 10, color: 'bg-latte-400' },
+                  ].map(c => (
+                    <div key={c.cause}>
+                      <div className="flex justify-between text-xs mb-0.5">
+                        <span className="text-amber-800">{c.cause}</span>
+                        <span className="font-bold text-amber-700">{c.pct}%</span>
+                      </div>
+                      <div className="w-full bg-amber-100 rounded-full h-2">
+                        <div className={`h-2 rounded-full ${c.color}`} style={{ width: `${c.pct}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Q3: Supervisor creating bottlenecks */}
+              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-3">
+                <p className="text-xs font-semibold text-orange-600 uppercase tracking-wide mb-1">👤 Supervisor Bottleneck</p>
+                <p className="text-lg font-bold text-orange-800">Supervisor Kannan — Assembly Line A</p>
+                <p className="text-sm text-orange-700 mt-1">
+                  7 complaints this month (highest of any supervisor). Worker rating: 2.1/5. 
+                  Team mood: Critical. 3 workers from his team are in flight risk zone.
+                </p>
+                <p className="text-xs text-orange-600 mt-2 font-medium">
+                  AI Recommendation: Schedule 1-on-1 intervention. If behaviour doesn't change within 7 days, reassign workers.
+                </p>
+              </div>
+
+              {/* Q4: Machines causing stress */}
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+                <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">⚙️ Machine-Related Stress</p>
+                <p className="text-lg font-bold text-blue-800">Press #1 (Welding) — Down for 3 days</p>
+                <p className="text-sm text-blue-700 mt-1">
+                  Workers forced to share remaining equipment. 5 safety complaints filed. 
+                  Productivity dropped 12%. Burnout risk elevated for 8 workers in this sector.
+                </p>
+                <p className="text-xs text-blue-600 mt-2 font-medium">
+                  AI Correlation: Machine downtime → safety risk → complaints → mood drop → attrition. Fix machine to break the chain.
+                </p>
+              </div>
+
+              {/* Q5: Shift causing burnout */}
+              <div className="bg-purple-50 border border-purple-200 rounded-xl p-4 mb-3">
+                <p className="text-xs font-semibold text-purple-600 uppercase tracking-wide mb-1">🌙 Shift Burnout Analysis</p>
+                <p className="text-lg font-bold text-purple-800">Night Shift (Shift C) — Highest Burnout</p>
+                <div className="mt-2 space-y-1.5">
+                  {[
+                    { shift: 'Shift A (6am-2pm)', mood: 3.8, complaints: 4, burnout: 'Low' },
+                    { shift: 'Shift B (2pm-10pm)', mood: 3.2, complaints: 7, burnout: 'Medium' },
+                    { shift: 'Shift C (10pm-6am)', mood: 2.1, complaints: 12, burnout: 'High' },
+                  ].map(s => (
+                    <div key={s.shift} className={`flex items-center justify-between text-xs px-3 py-2 rounded-lg ${
+                      s.burnout === 'High' ? 'bg-red-100 text-red-700' : s.burnout === 'Medium' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'
+                    }`}>
+                      <span className="font-medium">{s.shift}</span>
+                      <span>Mood: {s.mood} · {s.complaints} complaints · <strong>{s.burnout}</strong></span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-purple-600 mt-2 font-medium">
+                  AI Finding: Night shift has 3x more complaints. Factors: no canteen, limited supervision, transport unavailable after shift.
+                </p>
+              </div>
+
+              {/* Q6: What to fix first */}
+              <div className="bg-latte-700 rounded-xl p-4 text-white">
+                <p className="text-xs font-semibold text-latte-200 uppercase tracking-wide mb-1">🎯 Fix First — AI Priority Recommendation</p>
+                <p className="text-lg font-bold mt-1">#1: Safety equipment in Welding</p>
+                <p className="text-sm text-latte-200 mt-2">
+                  Fixing this one issue will: resolve 5 complaints, reduce flight risk for 3 workers, 
+                  restore 12% production output, and prevent ₹2.25L in potential attrition cost.
+                </p>
+                <div className="mt-3 pt-3 border-t border-latte-500 space-y-1 text-xs text-latte-300">
+                  <p><strong>#2:</strong> Supervisor Kannan intervention (Assembly Line A) — prevents 3 resignations</p>
+                  <p><strong>#3:</strong> Night shift canteen + transport (Shift C) — reduces 40% of burnout complaints</p>
+                  <p><strong>#4:</strong> Bathroom maintenance in Packaging — SLA breached 84hrs, quick win</p>
+                </div>
+              </div>
+            </div>
           </>
         )}
 
