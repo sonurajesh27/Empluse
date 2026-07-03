@@ -101,14 +101,41 @@ export default function WorkplaceMonitoring() {
     }
   }
 
-  // Simulate AI analysis every 3 seconds when camera is active
+  // Simulate AI analysis — detects something every 5 seconds
   useEffect(() => {
     if (!cameraActive) return
+    let count = 0
+    const mockAlerts = [
+      { type: 'Safety Violation — No Helmet', risk: 'high' as const, camera: 'Welding Bay 1', dept: 'Welding', conf: 88.2, emotions: [{ person: 'Worker', emotion: 'Neutral', confidence: 74 }], summary: 'Worker detected without safety helmet near welding station.' },
+      { type: 'Possible Physical Altercation', risk: 'critical' as const, camera: 'Assembly Line 2', dept: 'Assembly', conf: 95.4, emotions: [{ person: 'Person A', emotion: 'Angry', confidence: 92 }, { person: 'Person B', emotion: 'Fear', confidence: 89 }], summary: 'Two individuals in aggressive posture. Rapid arm movements detected.' },
+      { type: 'Worker Fall Detected', risk: 'critical' as const, camera: 'Packaging Zone', dept: 'Packaging', conf: 82.7, emotions: [{ person: 'Worker', emotion: 'Surprise', confidence: 67 }], summary: 'Sudden position change detected. Possible slip/fall.' },
+      { type: 'Restricted Area Entry', risk: 'medium' as const, camera: 'Maintenance Corridor', dept: 'Maintenance', conf: 76.1, emotions: [{ person: 'Person', emotion: 'Neutral', confidence: 60 }], summary: 'Unauthorized movement in restricted maintenance area after hours.' },
+      { type: 'Crowd Gathering', risk: 'medium' as const, camera: 'Canteen Exit', dept: 'Common Area', conf: 71.5, emotions: [{ person: 'Group', emotion: 'Angry', confidence: 58 }], summary: '8+ persons gathered outside normal break time.' },
+    ]
+
     const interval = setInterval(() => {
       setAnalyzing(true)
       setLastScan(new Date().toLocaleTimeString('en-IN'))
-      setTimeout(() => setAnalyzing(false), 800)
-    }, 3000)
+
+      setTimeout(() => {
+        setAnalyzing(false)
+        // Add a new detection every 5 seconds
+        const alert = mockAlerts[count % mockAlerts.length]
+        const newDetection: Detection = {
+          id: `DET-${String(detections.length + count + 1).padStart(3, '0')}`,
+          type: alert.type,
+          camera: alert.camera,
+          department: alert.dept,
+          confidence: alert.conf,
+          risk: alert.risk,
+          emotions: alert.emotions,
+          summary: alert.summary,
+          timestamp: new Date().toLocaleString('en-IN'),
+        }
+        setDetections(prev => [newDetection, ...prev.slice(0, 9)])
+        count++
+      }, 1500)
+    }, 5000)
     return () => clearInterval(interval)
   }, [cameraActive])
 
@@ -198,15 +225,22 @@ export default function WorkplaceMonitoring() {
             )}
             {/* Overlay indicators */}
             {cameraActive && analyzing && (
-              <div className="absolute top-3 left-3 flex items-center gap-2 bg-red-500/80 text-white text-xs px-3 py-1.5 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                AI Scanning...
+              <div className="absolute inset-0 border-4 border-red-500 rounded-xl animate-pulse pointer-events-none">
+                <div className="absolute top-3 left-3 flex items-center gap-2 bg-red-500/90 text-white text-xs px-3 py-1.5 rounded-full">
+                  <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                  ⚠️ THREAT DETECTED — Analyzing...
+                </div>
+                {/* Fake bounding box */}
+                <div className="absolute top-1/4 left-1/4 w-1/3 h-1/2 border-2 border-red-400 rounded-lg" />
+                <div className="absolute top-[22%] left-1/4 bg-red-500/80 text-white text-xs px-2 py-0.5 rounded">
+                  Person — Angry 92%
+                </div>
               </div>
             )}
             {cameraActive && !analyzing && (
               <div className="absolute top-3 left-3 flex items-center gap-2 bg-green-500/80 text-white text-xs px-3 py-1.5 rounded-full">
                 <span className="w-2 h-2 rounded-full bg-white" />
-                No threats detected
+                Monitoring — {detections.length} alerts logged
               </div>
             )}
           </div>
