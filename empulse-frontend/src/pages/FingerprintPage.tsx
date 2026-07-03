@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, Fingerprint, CheckCircle2 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { useLanguage } from '../context/LanguageContext'
 import { mockEmployees } from '../data/mockEmployees'
 
 type ScanState = 'idle' | 'scanning' | 'verified'
@@ -9,6 +10,7 @@ type ScanState = 'idle' | 'scanning' | 'verified'
 export default function FingerprintPage() {
   const navigate = useNavigate()
   const { setUser } = useAuth()
+  const { t } = useLanguage()
   const [scanState, setScanState] = useState<ScanState>('idle')
   const [detectedUser, setDetectedUser] = useState<typeof mockEmployees[0] | null>(null)
 
@@ -41,7 +43,7 @@ export default function FingerprintPage() {
         onClick={() => navigate('/role')}
         className="flex items-center gap-1 text-latte-500 text-sm mb-8 hover:text-latte-700 w-fit"
       >
-        <ChevronLeft size={18} /> Back
+        <ChevronLeft size={18} /> {t('common.back')}
       </button>
 
       {/* Step indicator */}
@@ -57,8 +59,8 @@ export default function FingerprintPage() {
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold text-latte-900 mb-2">Verify Identity</h2>
-      <p className="text-latte-500 text-sm mb-10">Place your finger on the sensor to authenticate</p>
+      <h2 className="text-2xl font-bold text-latte-900 mb-2">{t('fingerprint.title')}</h2>
+      <p className="text-latte-500 text-sm mb-10">{t('fingerprint.subtitle')}</p>
 
       {/* Fingerprint Button */}
       <div className="flex flex-col items-center gap-6 mt-4">
@@ -82,9 +84,9 @@ export default function FingerprintPage() {
         </button>
 
         <p className="text-latte-500 text-sm font-medium">
-          {scanState === 'idle' && 'Tap to scan fingerprint'}
-          {scanState === 'scanning' && 'Scanning…'}
-          {scanState === 'verified' && 'Identity verified!'}
+          {scanState === 'idle' && t('fingerprint.idle')}
+          {scanState === 'scanning' && t('fingerprint.scanning')}
+          {scanState === 'verified' && t('fingerprint.verified')}
         </p>
 
         {/* Detected user chip */}
@@ -99,7 +101,7 @@ export default function FingerprintPage() {
 
         {scanState === 'idle' && (
           <p className="text-latte-300 text-xs text-center max-w-xs">
-            Your identity is verified via biometric. No personal data is stored beyond this session.
+            {t('fingerprint.privacyNote')}
           </p>
         )}
       </div>

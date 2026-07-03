@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Home, MessageSquare, Trophy, Plus, Clock } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { useLanguage } from '../../context/LanguageContext'
 import { mockComplaints, Complaint } from '../../data/mockComplaints'
 import { mockRewards } from '../../data/mockRewards'
 import BottomNav from '../../components/NavBar'
@@ -25,6 +26,7 @@ function timeAgo(ts: string) {
 export default function EmployeeDashboard() {
   const navigate = useNavigate()
   const { currentUser, logout } = useAuth()
+  const { t } = useLanguage()
   const [tab, setTab] = useState('home')
 
   const user = currentUser!
@@ -45,9 +47,9 @@ export default function EmployeeDashboard() {
   const sectorLeaderboard = mockRewards.filter((r) => r.sector === user.sector).sort((a, b) => b.score - a.score).slice(0, 3)
 
   const navItems = [
-    { label: 'Home',       icon: <Home size={20} />,         tab: 'home' },
-    { label: 'Complaints', icon: <MessageSquare size={20} />, tab: 'complaints' },
-    { label: 'Rewards',    icon: <Trophy size={20} />,        tab: 'rewards' },
+    { label: t('employee.home'),       icon: <Home size={20} />,         tab: 'home' },
+    { label: t('employee.complaints'), icon: <MessageSquare size={20} />, tab: 'complaints' },
+    { label: t('employee.rewards'),    icon: <Trophy size={20} />,        tab: 'rewards' },
   ]
 
   return (
@@ -108,7 +110,7 @@ export default function EmployeeDashboard() {
             <div className="card">
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <p className="font-semibold text-latte-900">Feedback Window</p>
+                  <p className="font-semibold text-latte-900">{t('employee.feedbackWindow')}</p>
                   <p className="text-latte-500 text-sm mt-0.5">15-day cycle</p>
                 </div>
                 {daysRemaining <= 0 ? (
@@ -140,7 +142,7 @@ export default function EmployeeDashboard() {
 
             {/* Sector pulse */}
             <div className={`card ${mood.bg} border ${mood.border}`}>
-              <p className="font-semibold text-latte-800 mb-1">Sector Pulse</p>
+              <p className="font-semibold text-latte-800 mb-1">{t('employee.sectorPulse')}</p>
               <p className="text-latte-500 text-xs mb-3">{user.sector} this week</p>
               <div className="flex items-center justify-between">
                 <span className={`text-base font-semibold ${mood.text}`}>{mood.label}</span>
@@ -156,7 +158,7 @@ export default function EmployeeDashboard() {
               onClick={() => navigate('/employee/raise')}
               className="btn-primary w-full py-4 flex items-center justify-center gap-2 text-base"
             >
-              <Plus size={20} /> Raise New Issue
+              <Plus size={20} /> {t('employee.raiseIssue')}
             </button>
           </>
         )}

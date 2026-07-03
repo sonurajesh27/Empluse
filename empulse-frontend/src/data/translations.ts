@@ -217,6 +217,30 @@ export const translations: TranslationDict = {
     kn: 'ಸಲ್ಲಿಸಿ',
   },
 
+  // Login
+  'login.title.admin': { en: 'Admin Login', ta: 'நிர்வாகி உள்நுழைவு', hi: 'व्यवस्थापक लॉगिन', ml: 'അഡ്മിൻ ലോഗിൻ', kn: 'ನಿರ್ವಾಹಕ ಲಾಗಿನ್' },
+  'login.title.hr': { en: 'HR Manager Login', ta: 'மனிதவள மேலாளர் உள்நுழைவு', hi: 'एचआर मैनेजर लॉगिन', ml: 'എച്ച്ആർ മാനേജർ ലോഗിൻ', kn: 'ಎಚ್‌ಆರ್ ಮ್ಯಾನೇಜರ್ ಲಾಗಿನ್' },
+  'login.title.owner': { en: 'Owner Login', ta: 'உரிமையாளர் உள்நுழைவு', hi: 'मालिक लॉगिन', ml: 'ഉടമ ലോഗിൻ', kn: 'ಮಾಲೀಕ ಲಾಗಿನ್' },
+  'login.subtitle': { en: 'Enter your 4-digit PIN to continue', ta: 'தொடர 4 இலக்க PIN ஐ உள்ளிடவும்', hi: 'जारी रखने के लिए 4 अंकों का पिन दर्ज करें', ml: '4 അക്ക PIN നൽകുക', kn: 'ಮುಂದುವರಿಸಲು 4-ಅಂಕಿ PIN ನಮೂದಿಸಿ' },
+  'login.verify': { en: 'Verify PIN', ta: 'PIN சரிபார்க்க', hi: 'पिन सत्यापित करें', ml: 'PIN പരിശോധിക്കുക', kn: 'PIN ಪರಿಶೀಲಿಸಿ' },
+  'login.verifying': { en: 'Verifying...', ta: 'சரிபார்க்கிறது...', hi: 'सत्यापित हो रहा है...', ml: 'പരിശോധിക്കുന്നു...', kn: 'ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...' },
+  'login.forgot': { en: 'Forgot your PIN?', ta: 'PIN மறந்துவிட்டதா?', hi: 'पिन भूल गए?', ml: 'PIN മറന്നോ?', kn: 'PIN ಮರೆತಿರಾ?' },
+  'login.incorrect': { en: 'Incorrect PIN. Please try again.', ta: 'தவறான PIN. மீண்டும் முயற்சிக்கவும்.', hi: 'गलत पिन। कृपया पुनः प्रयास करें।', ml: 'തെറ്റായ PIN. വീണ്ടും ശ്രമിക്കുക.', kn: 'ತಪ್ಪಾದ PIN. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' },
+
+  // Fingerprint
+  'fingerprint.title': { en: 'Verify Identity', ta: 'அடையாளத்தை சரிபார்க்கவும்', hi: 'पहचान सत्यापित करें', ml: 'ഐഡന്റിറ്റി പരിശോധിക്കുക', kn: 'ಗುರುತನ್ನು ಪರಿಶೀಲಿಸಿ' },
+  'fingerprint.subtitle': { en: 'Place your finger on the sensor to authenticate', ta: 'அங்கீகரிக்க சென்சாரில் விரலை வைக்கவும்', hi: 'प्रमाणित करने के लिए सेंसर पर उंगली रखें', ml: 'ആധികാരികമാക്കാൻ സെൻസറിൽ വിരൽ വെക്കുക', kn: 'ದೃಢೀಕರಿಸಲು ಸೆನ್ಸರ್‌ನಲ್ಲಿ ಬೆರಳನ್ನು ಇಡಿ' },
+  'fingerprint.idle': { en: 'Tap to scan fingerprint', ta: 'ஸ்கேன் செய்ய தட்டவும்', hi: 'स्कैन करने के लिए टैप करें', ml: 'സ്കാൻ ചെയ്യാൻ ടാപ്പ് ചെയ്യുക', kn: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ' },
+  'fingerprint.scanning': { en: 'Scanning…', ta: 'ஸ்கேன் செய்கிறது…', hi: 'स्कैनिंग…', ml: 'സ്കാൻ ചെയ്യുന്നു…', kn: 'ಸ್ಕ್ಯಾನ್ ಆಗುತ್ತಿದೆ…' },
+  'fingerprint.verified': { en: 'Identity verified!', ta: 'அடையாளம் சரிபார்க்கப்பட்டது!', hi: 'पहचान सत्यापित!', ml: 'ഐഡന്റിറ്റി പരിശോധിച്ചു!', kn: 'ಗುರುತು ಪರಿಶೀಲಿಸಲಾಗಿದೆ!' },
+  'fingerprint.privacyNote': { en: 'Your identity is verified via biometric. No personal data is stored beyond this session.', ta: 'உங்கள் அடையாளம் பயோமெட்ரிக் மூலம் சரிபார்க்கப்படுகிறது. இந்த அமர்வுக்கு அப்பால் தனிப்பட்ட தரவு சேமிக்கப்படாது.', hi: 'आपकी पहचान बायोमेट्रिक से सत्यापित है। इस सत्र के बाद कोई व्यक्तिगत डेटा संग्रहीत नहीं होता।', ml: 'നിങ്ങളുടെ ഐഡന്റിറ്റി ബയോമെട്രിക് വഴി പരിശോധിക്കുന്നു. ഈ സെഷനിൽ കവിഞ്ഞ് വ്യക്തിഗത ഡാറ്റ സംഭരിക്കില്ല.', kn: 'ನಿಮ್ಮ ಗುರುತನ್ನು ಬಯೋಮೆಟ್ರಿಕ್ ಮೂಲಕ ಪರಿಶೀಲಿಸಲಾಗುತ್ತದೆ. ಈ ಸೆಷನ್ ನಂತರ ವೈಯಕ್ತಿಕ ಡೇಟಾ ಸಂಗ್ರಹಿಸಲಾಗುವುದಿಲ್ಲ.' },
+
+  // Employee dashboard extra
+  'employee.myComplaints': { en: 'My Complaints', ta: 'எனது புகார்கள்', hi: 'मेरी शिकायतें', ml: 'എന്റെ പരാതികൾ', kn: 'ನನ್ನ ದೂರುಗಳು' },
+  'employee.total': { en: 'Total', ta: 'மொத்தம்', hi: 'कुल', ml: 'മൊത്തം', kn: 'ಒಟ್ಟು' },
+  'employee.pending': { en: 'Pending', ta: 'நிலுவையில்', hi: 'लंबित', ml: 'തീർപ്പാക്കാത്ത', kn: 'ಬಾಕಿ' },
+  'employee.resolved': { en: 'Resolved', ta: 'தீர்க்கப்பட்டது', hi: 'हल किया गया', ml: 'പരിഹരിച്ചു', kn: 'ಪರಿಹരിಸಲಾಗಿದೆ' },
+
   // Daily Pulse
   'pulse.question': {
     en: 'How was your day?',

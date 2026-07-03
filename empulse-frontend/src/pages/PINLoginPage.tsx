@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ChevronLeft, Delete } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { useLanguage } from '../context/LanguageContext'
 import { loginWithPin } from '../api/apiClient'
 
 export default function PINLoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const { setUser } = useAuth()
+  const { t } = useLanguage()
   const role = (location.state as { role?: string })?.role ?? 'admin'
 
   const [pin, setPin] = useState<string[]>([])
@@ -39,7 +41,7 @@ export default function PINLoginPage() {
       else if (user.role === 'owner') navigate('/owner')
       else navigate('/employee')
     } catch {
-      setError('Incorrect PIN. Please try again.')
+      setError(t('login.incorrect'))
       setPin([])
     } finally {
       setLoading(false)
@@ -48,19 +50,21 @@ export default function PINLoginPage() {
 
   const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back']
 
+  const titleKey = role === 'admin' ? 'login.title.admin' : role === 'owner' ? 'login.title.owner' : 'login.title.hr'
+
   return (
     <div className="min-h-screen bg-latte-50 flex flex-col px-6 py-10 max-w-md mx-auto items-center">
       <button
         onClick={() => navigate('/role')}
         className="flex items-center gap-1 text-latte-500 text-sm mb-8 hover:text-latte-700 self-start"
       >
-        <ChevronLeft size={18} /> Back
+        <ChevronLeft size={18} /> {t('common.back')}
       </button>
 
       <h2 className="text-2xl font-bold text-latte-900 mb-1 self-start">
-        {role === 'admin' ? 'Admin Login' : 'HR Manager Login'}
+        {t(titleKey)}
       </h2>
-      <p className="text-latte-500 text-sm mb-8 self-start">Enter your 4-digit PIN to continue</p>
+      <p className="text-latte-500 text-sm mb-8 self-start">{t('login.subtitle')}</p>
 
       {/* Dots */}
       <div className="flex gap-4 mb-6">
@@ -110,11 +114,14 @@ export default function PINLoginPage() {
         disabled={pin.length !== 4 || loading}
         className="btn-primary w-64 mt-6"
       >
-        {loading ? 'Verifying...' : 'Verify PIN'}
+        {loading ? t('login.verifying') : t('login.verify')}
       </button>
 
       <p className="mt-8 text-latte-400 text-xs text-center">
-        Forgot your PIN? <span className="text-latte-600 font-medium underline cursor-pointer">Contact Admin</span>
+        {t('login.forgot')}{' '}
+        <button onClick={() => navigate('/demo-guide')} className="text-latte-600 font-medium underline">
+          View Demo Guide
+        </button>
       </p>
     </div>
   )

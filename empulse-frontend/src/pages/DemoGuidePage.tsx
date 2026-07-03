@@ -6,7 +6,7 @@ const DEMO_ACCOUNTS = [
   { role: 'Employee', id: 'EMP-1001', name: 'Ravi Kumar', sector: 'Assembly Line A', pin: '1001', method: 'Fingerprint or PIN', color: 'bg-amber-50 border-amber-200' },
   { role: 'Employee', id: 'EMP-1004', name: 'Suresh M.', sector: 'Welding', pin: '1004', method: 'Fingerprint or PIN', color: 'bg-amber-50 border-amber-200' },
   { role: 'Admin', id: 'ADM-001', name: 'Murugan A.', sector: 'Management', pin: '0000', method: 'PIN Login', color: 'bg-latte-50 border-latte-200' },
-  { role: 'HR Manager', id: 'EMP-2001', name: 'Priya HR', sector: 'HR', pin: '2001', method: 'PIN Login', color: 'bg-emerald-50 border-emerald-200' },
+  { role: 'HR Manager', id: 'EMP-2002', name: 'Priya HR', sector: 'HR', pin: '2001', method: 'PIN Login', color: 'bg-emerald-50 border-emerald-200' },
   { role: 'Owner', id: 'OWN-001', name: 'Rajesh R.', sector: 'Owner', pin: '9999', method: 'PIN Login', color: 'bg-purple-50 border-purple-200' },
 ]
 

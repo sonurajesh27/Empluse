@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useLanguage } from '../../context/LanguageContext'
 import { COMPLAINT_CATEGORIES } from '../../data/sectors'
 import VoiceRecorder from '../../components/VoiceRecorder'
 import { createComplaint, analyzeText } from '../../api/apiClient'
@@ -30,6 +31,7 @@ type Urgency = 'Low' | 'Medium' | 'High'
 export default function RaiseComplaint() {
   const navigate = useNavigate()
   const { currentUser } = useAuth()
+  const { t } = useLanguage()
 
   const [step, setStep] = useState(1)
   const [category, setCategory] = useState('')
@@ -96,14 +98,14 @@ export default function RaiseComplaint() {
             <div key={s} className={`h-1.5 flex-1 rounded-full transition-all ${s <= step ? 'bg-latte-700' : 'bg-latte-200'}`} />
           ))}
         </div>
-        <p className="text-latte-400 text-xs mt-1.5">Step {step} of 4 — {['Category', 'Sub-category', 'Describe', 'Confirm'][step - 1]}</p>
+        <p className="text-latte-400 text-xs mt-1.5">Step {step} of 4 — {[t('complaint.category'), t('complaint.subcategory'), t('complaint.describe'), t('complaint.confirm')][step - 1]}</p>
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-5">
         {/* Step 1 */}
         {step === 1 && (
           <div>
-            <h3 className="font-semibold text-latte-900 mb-4">What is the issue about?</h3>
+            <h3 className="font-semibold text-latte-900 mb-4">{t('complaint.category')}</h3>
             <div className="grid grid-cols-2 gap-3">
               {COMPLAINT_CATEGORIES.map((cat) => {
                 const Icon = ICON_MAP[cat.icon] ?? MessageSquare
@@ -133,7 +135,7 @@ export default function RaiseComplaint() {
               {(() => { const Icon = ICON_MAP[selectedCat.icon] ?? MessageSquare; const cc = COLOR_MAP[selectedCat.color]; return <div className={`p-2 rounded-xl border ${cc}`}><Icon size={18}/></div> })()}
               <span className="font-semibold text-latte-800">{selectedCat.label}</span>
             </div>
-            <h3 className="font-semibold text-latte-900 mb-3">Select the specific issue:</h3>
+            <h3 className="font-semibold text-latte-900 mb-3">{t('complaint.subcategory')}</h3>
             <div className="flex flex-wrap gap-2">
               {selectedCat.subCategories.map((sub) => (
                 <button
@@ -152,7 +154,7 @@ export default function RaiseComplaint() {
         {/* Step 3 */}
         {step === 3 && (
           <div>
-            <h3 className="font-semibold text-latte-900 mb-4">Describe the issue</h3>
+            <h3 className="font-semibold text-latte-900 mb-4">{t('complaint.describe')}</h3>
 
             {/* Toggle */}
             <div className="flex bg-latte-100 rounded-xl p-1 mb-5 gap-1">
@@ -213,7 +215,7 @@ export default function RaiseComplaint() {
         {/* Step 4 */}
         {step === 4 && selectedCat && (
           <div>
-            <h3 className="font-semibold text-latte-900 mb-4">Confirm & Submit</h3>
+            <h3 className="font-semibold text-latte-900 mb-4">{t('complaint.confirm')}</h3>
 
             <div className="card space-y-3 mb-4">
               <Row label="Sector" value={currentUser?.sector ?? '—'} />
@@ -226,12 +228,12 @@ export default function RaiseComplaint() {
             <div className="flex items-center gap-2 bg-latte-50 border border-latte-200 rounded-2xl px-4 py-3 mb-6">
               <Lock size={15} className="text-latte-500 shrink-0" />
               <p className="text-latte-600 text-xs">
-                Submitting anonymously from <strong>{currentUser?.sector}</strong>. Your identity is never revealed.
+                {t('complaint.anonymous')}
               </p>
             </div>
 
             <button onClick={handleSubmit} className="btn-primary w-full">
-              Submit Complaint
+              {t('complaint.submit')}
             </button>
           </div>
         )}
