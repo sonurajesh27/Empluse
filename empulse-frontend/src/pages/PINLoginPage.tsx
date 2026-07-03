@@ -113,8 +113,8 @@ export default function PINLoginPage() {
         {loading ? 'Verifying...' : 'Verify PIN'}
       </button>
 
-      <p className="mt-8 text-latte-300 text-xs text-center">
-        Admin: 0000 · HR: 2001 · Owner: 9999
+      <p className="mt-8 text-latte-400 text-xs text-center">
+        Forgot your PIN? <span className="text-latte-600 font-medium underline cursor-pointer">Contact Admin</span>
       </p>
     </div>
   )

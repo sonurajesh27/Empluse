@@ -10,6 +10,7 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import ComplaintDetail from './pages/admin/ComplaintDetail'
 import HRDashboard from './pages/hr/HRDashboard'
 import OwnerDashboard from './pages/owner/OwnerDashboard'
+import DemoGuidePage from './pages/DemoGuidePage'
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/admin/complaint/:id" element={<ComplaintDetail />} />
           <Route path="/hr" element={<HRDashboard />} />
           <Route path="/owner" element={<OwnerDashboard />} />
+          <Route path="/demo-guide" element={<DemoGuidePage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

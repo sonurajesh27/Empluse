@@ -1,0 +1,258 @@
+export type Language = 'en' | 'ta' | 'hi' | 'ml' | 'kn'
+
+export interface TranslationDict {
+  [key: string]: {
+    en: string
+    ta: string
+    hi: string
+    ml: string
+    kn: string
+  }
+}
+
+export const translations: TranslationDict = {
+  // Splash
+  'splash.title': {
+    en: 'EmPulse',
+    ta: 'EmPulse',
+    hi: 'EmPulse',
+    ml: 'EmPulse',
+    kn: 'EmPulse',
+  },
+  'splash.tagline': {
+    en: 'AI-Powered Workforce Retention',
+    ta: 'AI-இயக்கப்படும் பணியாளர் தக்கவைப்பு',
+    hi: 'AI-संचालित कार्यबल प्रतिधारण',
+    ml: 'AI-പവർഡ് വർക്ക്ഫോഴ്സ് റിറ്റെൻഷൻ',
+    kn: 'AI-ಚಾಲಿತ ಕಾರ್ಯಪಡೆ ಧಾರಣ',
+  },
+  'splash.enter': {
+    en: 'Enter Platform',
+    ta: 'நுழைக',
+    hi: 'प्लेटफ़ॉर्म में प्रवेश करें',
+    ml: 'പ്ലാറ്റ്ഫോം നൽകുക',
+    kn: 'ಪ್ಲಾಟ್‌ಫಾರ್ಮ್ ನಮೂದಿಸಿ',
+  },
+  'splash.subtitle': {
+    en: 'Giving every worker a voice. Giving every manager clarity.',
+    ta: 'ஒவ்வொரு தொழிலாளிக்கும் குரல். ஒவ்வொரு மேலாளருக்கும் தெளிவு.',
+    hi: 'हर कर्मचारी को आवाज़। हर प्रबंधक को स्पष्टता।',
+    ml: 'ഓരോ തൊഴിലാളിക്കും ശബ്ദം. ഓരോ മാനേജർക്കും വ്യക്തത.',
+    kn: 'ಪ್ರತಿ ಕೆಲಸಗಾರನಿಗೆ ಧ್ವನಿ. ಪ್ರತಿ ಮ್ಯಾನೇಜರ್‌ಗೆ ಸ್ಪಷ್ಟತೆ.',
+  },
+
+  // Role select
+  'role.who': {
+    en: 'Who are you?',
+    ta: 'நீங்கள் யார்?',
+    hi: 'आप कौन हैं?',
+    ml: 'നിങ്ങൾ ആരാണ്?',
+    kn: 'ನೀವು ಯಾರು?',
+  },
+  'role.employee': {
+    en: 'Employee',
+    ta: 'ஊழியர்',
+    hi: 'कर्मचारी',
+    ml: 'ജീവനക്കാരൻ',
+    kn: 'ಉದ್ಯೋಗಿ',
+  },
+  'role.hr': {
+    en: 'HR Manager',
+    ta: 'மனிதவள மேலாளர்',
+    hi: 'मानव संसाधन प्रबंधक',
+    ml: 'എച്ച്ആർ മാനേജർ',
+    kn: 'ಎಚ್‌ಆರ್ ಮ್ಯಾನೇಜರ್',
+  },
+  'role.admin': {
+    en: 'Admin',
+    ta: 'நிர்வாகி',
+    hi: 'व्यवस्थापक',
+    ml: 'അഡ്മിൻ',
+    kn: 'ನಿರ್ವಾಹಕ',
+  },
+  'role.owner': {
+    en: 'Owner',
+    ta: 'உரிமையாளர்',
+    hi: 'मालिक',
+    ml: 'ഉടമ',
+    kn: 'ಮಾಲೀಕ',
+  },
+
+  // Employee dashboard
+  'employee.home': {
+    en: 'Home',
+    ta: 'முகப்பு',
+    hi: 'होम',
+    ml: 'ഹോം',
+    kn: 'ಹೋಮ್',
+  },
+  'employee.complaints': {
+    en: 'Complaints',
+    ta: 'புகார்கள்',
+    hi: 'शिकायतें',
+    ml: 'പരാതികൾ',
+    kn: 'ದೂರುಗಳು',
+  },
+  'employee.rewards': {
+    en: 'Rewards',
+    ta: 'வெகுமதிகள்',
+    hi: 'पुरस्कार',
+    ml: 'റിവാർഡുകൾ',
+    kn: 'ಪ್ರಶಸ್ತಿಗಳು',
+  },
+  'employee.vote': {
+    en: 'Vote',
+    ta: 'வாக்கு',
+    hi: 'वोट',
+    ml: 'വോട്ട്',
+    kn: 'ಮತ',
+  },
+  'employee.feedbackWindow': {
+    en: 'Feedback Window',
+    ta: 'கருத்து சாளரம்',
+    hi: 'फीडबैक विंडो',
+    ml: 'ഫീഡ്ബാക്ക് വിൻഡോ',
+    kn: 'ಪ್ರತಿಕ್ರಿಯೆ ವಿಂಡೋ',
+  },
+  'employee.raiseIssue': {
+    en: 'Raise New Issue',
+    ta: 'புதிய புகார்',
+    hi: 'नई शिकायत दर्ज करें',
+    ml: 'പുതിയ പരാതി ഉയർത്തുക',
+    kn: 'ಹೊಸ ಸಮಸ್ಯೆ ಎತ್ತಿ',
+  },
+  'employee.sectorPulse': {
+    en: 'Sector Pulse',
+    ta: 'துறை துடிப்பு',
+    hi: 'सेक्टर पल्स',
+    ml: 'സെക്ടർ പൾസ്',
+    kn: 'ಸೆಕ್ಟರ್ ಪಲ್ಸ್',
+  },
+
+  // Complaint flow
+  'complaint.category': {
+    en: 'What is the issue about?',
+    ta: 'பிரச்சினை எதைப் பற்றியது?',
+    hi: 'समस्या किस बारे में है?',
+    ml: 'പ്രശ്നം എന്താണ്?',
+    kn: 'ಸಮಸ್ಯೆ ಏನು?',
+  },
+  'complaint.subcategory': {
+    en: 'Select the specific issue:',
+    ta: 'குறிப்பிட்ட பிரச்சினையை தேர்வு செய்க:',
+    hi: 'विशिष्ट मुद्दा चुनें:',
+    ml: 'നിർദ്ദിഷ്ട പ്രശ്നം തിരഞ്ഞെടുക്കുക:',
+    kn: 'ನಿರ್ದಿಷ್ಟ ಸಮಸ್ಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:',
+  },
+  'complaint.describe': {
+    en: 'Describe the issue',
+    ta: 'பிரச்சினையை விவரிக்கவும்',
+    hi: 'समस्या का वर्णन करें',
+    ml: 'പ്രശ്നം വിവരിക്കുക',
+    kn: 'ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಿ',
+  },
+  'complaint.confirm': {
+    en: 'Confirm & Submit',
+    ta: 'உறுதிப்படுத்தி சமர்ப்பிக்கவும்',
+    hi: 'पुष्टि करें और सबमिट करें',
+    ml: 'സ്ഥിരീകരിക്കുക & സമർപ്പിക്കുക',
+    kn: 'ದೃಢೀಕರಿಸಿ ಮತ್ತು ಸಲ್ಲಿಸಿ',
+  },
+  'complaint.submit': {
+    en: 'Submit Complaint',
+    ta: 'புகார் சமர்ப்பிக்கவும்',
+    hi: 'शिकायत दर्ज करें',
+    ml: 'പരാതി സമർപ്പിക്കുക',
+    kn: 'ದೂರು ಸಲ್ಲಿಸಿ',
+  },
+  'complaint.voice': {
+    en: '🎤 Voice',
+    ta: '🎤 குரல்',
+    hi: '🎤 आवाज़',
+    ml: '🎤 ശബ്ദം',
+    kn: '🎤 ಧ್ವನಿ',
+  },
+  'complaint.text': {
+    en: '✏️ Text',
+    ta: '✏️ உரை',
+    hi: '✏️ पाठ',
+    ml: '✏️ ടെക്സ്റ്റ്',
+    kn: '✏️ ಪಠ್ಯ',
+  },
+  'complaint.anonymous': {
+    en: 'Submitting anonymously. Your identity is never revealed.',
+    ta: 'அநாமதேயமாக சமர்ப்பிக்கிறது. உங்கள் அடையாளம் வெளிப்படுத்தப்படாது.',
+    hi: 'गुमनाम रूप से सबमिट कर रहे हैं। आपकी पहचान कभी प्रकट नहीं होती।',
+    ml: 'അജ്ഞാതമായി സമർപ്പിക്കുന്നു. നിങ്ങളുടെ ഐഡന്റിറ്റി ഒരിക്കലും വെളിപ്പെടുത്തില്ല.',
+    kn: 'ಅನಾಮಧೇಯವಾಗಿ ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ. ನಿಮ್ಮ ಗುರುತು ಎಂದಿಗೂ ಬಹಿರಂಗವಾಗುವುದಿಲ್ಲ.',
+  },
+
+  // Common
+  'common.back': {
+    en: 'Back',
+    ta: 'பின்',
+    hi: 'वापस',
+    ml: 'മടങ്ങുക',
+    kn: 'ಹಿಂದೆ',
+  },
+  'common.logout': {
+    en: 'Logout',
+    ta: 'வெளியேறு',
+    hi: 'लॉग आउट',
+    ml: 'ലോഗൗട്ട്',
+    kn: 'ಲಾಗ್ ಔಟ್',
+  },
+  'common.next': {
+    en: 'Next',
+    ta: 'அடுத்து',
+    hi: 'अगला',
+    ml: 'അടുത്തത്',
+    kn: 'ಮುಂದೆ',
+  },
+  'common.submit': {
+    en: 'Submit',
+    ta: 'சமர்ப்பி',
+    hi: 'जमा करें',
+    ml: 'സമർപ്പിക്കുക',
+    kn: 'ಸಲ್ಲಿಸಿ',
+  },
+
+  // Daily Pulse
+  'pulse.question': {
+    en: 'How was your day?',
+    ta: 'உங்கள் நாள் எப்படி இருந்தது?',
+    hi: 'आपका दिन कैसा रहा?',
+    ml: 'നിങ്ങളുടെ ദിവസം എങ്ങനെയായിരുന്നു?',
+    kn: 'ನಿಮ್ಮ ದಿನ ಹೇಗಿತ್ತು?',
+  },
+  'pulse.thanks': {
+    en: 'Thanks! Your mood has been recorded.',
+    ta: 'நன்றி! உங்கள் மனநிலை பதிவு செய்யப்பட்டது.',
+    hi: 'धन्यवाद! आपका मूड रिकॉर्ड किया गया।',
+    ml: 'നന്ദി! നിങ്ങളുടെ മൂഡ് രേഖപ്പെടുത്തി.',
+    kn: 'ಧನ್ಯವಾದಗಳು! ನಿಮ್ಮ ಮೂಡ್ ದಾಖಲಿಸಲಾಗಿದೆ.',
+  },
+
+  // Vote
+  'vote.confirm': {
+    en: 'Vote for {name}? This cannot be changed.',
+    ta: '{name} க்கு வாக்கு? இது மாற்ற முடியாது.',
+    hi: '{name} को वोट? इसे बदला नहीं जा सकता।',
+    ml: '{name} ന് വോട്ട്? ഇത് മാറ്റാൻ കഴിയില്ല.',
+    kn: '{name} ಗೆ ಮತ? ಇದನ್ನು ಬದಲಾಯಿಸಲಾಗುವುದಿಲ್ಲ.',
+  },
+  'vote.locked': {
+    en: '✓ Vote locked',
+    ta: '✓ வாக்கு பூட்டப்பட்டது',
+    hi: '✓ वोट लॉक',
+    ml: '✓ വോട്ട് ലോക്ക്',
+    kn: '✓ ಮತ ಲಾಕ್',
+  },
+  'vote.results': {
+    en: 'Results in {days} days',
+    ta: '{days} நாளில் முடிவுகள்',
+    hi: '{days} दिन में परिणाम',
+    ml: '{days} ദിവസത്തിൽ ഫലങ്ങൾ',
+    kn: '{days} ದಿನಗಳಲ್ಲಿ ಫಲಿತಾಂಶಗಳು',
+  },
+}
