@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ChevronLeft, Delete } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
-import { mockEmployees } from '../data/mockEmployees'
+import { loginWithPin } from '../api/apiClient'
 
 export default function PINLoginPage() {
   const navigate = useNavigate()
@@ -12,6 +12,7 @@ export default function PINLoginPage() {
 
   const [pin, setPin] = useState<string[]>([])
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const append = (d: string) => {
     if (pin.length < 4) {
@@ -21,18 +22,27 @@ export default function PINLoginPage() {
   }
   const backspace = () => setPin((p) => p.slice(0, -1))
 
-  const submit = () => {
+  const submit = async () => {
     const pinStr = pin.join('')
-    const found = mockEmployees.find((e) => e.pin === pinStr)
-    if (found) {
-      setUser({ ...found })
-      if (found.role === 'admin') navigate('/admin')
-      else if (found.role === 'hr') navigate('/hr')
-      else if (found.role === 'owner') navigate('/owner')
+    setLoading(true)
+    try {
+      const user = await loginWithPin(pinStr)
+      setUser({
+        id: user.employeeCode,
+        name: user.name,
+        sector: user.sector,
+        role: user.role,
+        roleType: user.roleType,
+      })
+      if (user.role === 'admin') navigate('/admin')
+      else if (user.role === 'hr') navigate('/hr')
+      else if (user.role === 'owner') navigate('/owner')
       else navigate('/employee')
-    } else {
+    } catch {
       setError('Incorrect PIN. Please try again.')
       setPin([])
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -97,10 +107,10 @@ export default function PINLoginPage() {
 
       <button
         onClick={submit}
-        disabled={pin.length !== 4}
+        disabled={pin.length !== 4 || loading}
         className="btn-primary w-64 mt-6"
       >
-        Verify PIN
+        {loading ? 'Verifying...' : 'Verify PIN'}
       </button>
 
       <p className="mt-8 text-latte-300 text-xs text-center">

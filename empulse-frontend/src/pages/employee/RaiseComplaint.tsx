@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { COMPLAINT_CATEGORIES } from '../../data/sectors'
 import VoiceRecorder from '../../components/VoiceRecorder'
+import { createComplaint, analyzeText } from '../../api/apiClient'
 import {
   ChevronLeft, UserX, Building2, UtensilsCrossed, ShieldAlert,
   Wrench, Heart, Banknote, MessageSquare, Lock, CheckCircle2
@@ -41,7 +42,27 @@ export default function RaiseComplaint() {
 
   const selectedCat = COMPLAINT_CATEGORIES.find((c) => c.id === category)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    try {
+      // Call AI to analyze text
+      let confidence = 80
+      if (description && mode === 'text') {
+        const aiResult = await analyzeText(description)
+        confidence = aiResult.confidence || 80
+      }
+
+      // Create complaint in backend
+      await createComplaint({
+        sector: currentUser?.sector || 'Unknown',
+        category,
+        subCategory,
+        text: description || `Voice complaint: ${subCategory}`,
+        isVoice: mode === 'voice',
+        confidenceScore: confidence,
+      })
+    } catch (e) {
+      console.error('Submit failed, using fallback:', e)
+    }
     setSubmitted(true)
     setTimeout(() => navigate('/employee'), 2000)
   }

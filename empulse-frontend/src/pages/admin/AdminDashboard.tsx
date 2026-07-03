@@ -1,18 +1,27 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LogOut, AlertTriangle, CheckSquare, List, Activity, BrainCircuit } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
-import { mockComplaints, Complaint, ComplaintStatus } from '../../data/mockComplaints'
+import { Complaint, ComplaintStatus } from '../../data/mockComplaints'
 import { SECTORS, COMPLAINT_CATEGORIES } from '../../data/sectors'
 import ComplaintCard from '../../components/ComplaintCard'
 import AISignalCard from '../../components/AISignalCard'
 import { mockAISignals } from '../../data/mockAISignals'
+import { getComplaints, escalateComplaint as apiEscalate, resolveComplaint as apiResolve } from '../../api/apiClient'
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const { currentUser, logout } = useAuth()
   const [tab, setTab] = useState('queue')
-  const [complaints, setComplaints] = useState<Complaint[]>(mockComplaints)
+  const [complaints, setComplaints] = useState<Complaint[]>([])
+
+  // Fetch complaints from backend
+  useEffect(() => {
+    getComplaints().then(setComplaints).catch(() => {
+      // Fallback to empty if backend is down
+      setComplaints([])
+    })
+  }, [])
 
   // Filters
   const [filterSector, setFilterSector] = useState('all')
@@ -28,7 +37,16 @@ export default function AdminDashboard() {
     })
   }, [complaints, filterSector, filterCategory, filterStatus])
 
-  const updateStatus = (id: string, status: ComplaintStatus) => {
+  const updateStatus = async (id: string, status: ComplaintStatus) => {
+    try {
+      if (status === 'escalated') {
+        await apiEscalate(id)
+      } else if (status === 'resolved') {
+        await apiResolve(id, currentUser?.name || 'Admin')
+      }
+    } catch (e) {
+      console.error('API call failed:', e)
+    }
     setComplaints((prev) => prev.map((c) => c.id === id ? { ...c, status } : c))
   }
 
