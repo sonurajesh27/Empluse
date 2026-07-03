@@ -70,6 +70,9 @@ export default function OwnerDashboard() {
             <p className="text-latte-300 text-sm">{currentUser?.name}</p>
           </div>
           <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/legal')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
+              ⚖️ Legal
+            </button>
             <button onClick={() => navigate('/owner/report')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
               <FileText size={12} /> Report
             </button>

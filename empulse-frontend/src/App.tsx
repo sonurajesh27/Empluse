@@ -15,6 +15,8 @@ import QuickPoll from './pages/hr/QuickPoll'
 import OwnerDashboard from './pages/owner/OwnerDashboard'
 import MonthlyReport from './pages/owner/MonthlyReport'
 import DemoGuidePage from './pages/DemoGuidePage'
+import LegalCaseList from './pages/legal/LegalCaseList'
+import LegalCaseDetail from './pages/legal/LegalCaseDetail'
 
 export default function App() {
   return (
@@ -36,6 +38,8 @@ export default function App() {
           <Route path="/owner" element={<OwnerDashboard />} />
           <Route path="/owner/report" element={<MonthlyReport />} />
           <Route path="/demo-guide" element={<DemoGuidePage />} />
+          <Route path="/legal" element={<LegalCaseList />} />
+          <Route path="/legal/case/:id" element={<LegalCaseDetail />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

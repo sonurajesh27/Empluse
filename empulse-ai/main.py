@@ -191,3 +191,44 @@ async def get_categories():
         category: SUBCATEGORY_MAP.get(category, [])
         for category in CATEGORY_KEYWORDS.keys()
     }
+
+
+@app.post("/api/legal/analyze")
+async def analyze_legal_case(case_data: dict):
+    """Return mock investigation report for legal case analysis"""
+    return {
+        "summary": "Worker reported inappropriate physical contact by Supervisor on 2 occasions. Complaint was corroborated by one co-worker witness statement. CCTV footage from both dates shows proximity and body language consistent with the complaint.",
+        "evidenceQuality": "Strong (7 documents, 1 witness corroboration)",
+        "patternAnalysis": [
+            "Supervisor has received 7 complaints in the last 6 months from 4 different workers",
+            "Pattern of escalating behaviour: verbal to physical intimidation",
+            "Incidents cluster around shift-end periods (fatigue/stress factor)",
+            "Previous warning issued — behaviour did not improve",
+        ],
+        "attendanceAnalysis": "Worker showed 23% increase in absenteeism following incidents. Prior attendance was 96% regular. Pattern suggests avoidance behaviour consistent with harassment claims.",
+        "performanceAnalysis": "Worker had consistent ratings for 18 months. Performance score dropped following the incident. No prior disciplinary issues on record for the complainant.",
+        "previousHistory": [
+            "Prior warning letter issued for verbal abuse (different complainant)",
+            "Informal complaint resolved with mediation",
+            "Unrelated facility complaint resolved normally",
+        ],
+        "credibilityScore": 87,
+        "riskLevel": "critical",
+        "recommendations": [
+            "Immediately suspend supervisor from direct supervisory duties pending investigation conclusion",
+            "Ensure affected worker is temporarily reassigned",
+            "Conduct formal disciplinary hearing within 7 working days",
+            "Engage external harassment prevention counsellor for team debrief",
+            "Review all complaints filed against supervisor in the last 12 months",
+            "Consider termination proceedings given repeated offence pattern",
+        ],
+        "nextSteps": [
+            "Schedule disciplinary hearing within 5 days",
+            "Obtain legal opinion on termination risk and labor law compliance",
+            "Document all evidence in sealed investigation file",
+            "Inform Owner about critical risk",
+            "Arrange counselling support for affected worker",
+        ],
+        "confidence": 87,
+        "disclaimer": "This report is AI-assisted and intended to support HR and Legal investigations. Final employment decisions must always be made by authorized human decision-makers.",
+    }

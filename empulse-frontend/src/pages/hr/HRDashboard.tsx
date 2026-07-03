@@ -73,6 +73,9 @@ export default function HRDashboard() {
             <p className="text-latte-300 text-sm">{currentUser?.name}</p>
           </div>
           <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/legal')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1.5 rounded-xl transition-colors">
+              ⚖️ Legal
+            </button>
             <button onClick={() => navigate('/hr/poll')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1.5 rounded-xl transition-colors">
               <MessageCircle size={12} /> Poll
             </button>
