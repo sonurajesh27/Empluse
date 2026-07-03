@@ -58,36 +58,34 @@ export default function OwnerDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-cream">
-      {/* Header */}
-      <div className="bg-white border-b border-latte-100 px-5 py-4 flex items-center gap-3 sticky top-0 z-10">
-        <button onClick={() => navigate('/')} className="text-latte-400 hover:text-latte-700 transition-colors">
-          <ArrowLeft className="w-5 h-5" />
-        </button>
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <h1 className="font-semibold text-espresso">EmPulse Owner</h1>
-            <span className="text-xs bg-espresso text-cream px-2 py-0.5 rounded-full">Full Access</span>
+    <div className="min-h-screen bg-latte-50">
+      {/* Header — consistent with Admin/HR */}
+      <div className="bg-latte-700 px-4 pt-10 pb-4 sticky top-0 z-10">
+        <div className="flex items-center justify-between max-w-3xl mx-auto">
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-white font-bold text-xl">EmPulse Owner</h1>
+              <span className="text-xs bg-white/20 text-white px-2 py-0.5 rounded-full">Full Access</span>
+            </div>
+            <p className="text-latte-300 text-sm">{currentUser?.name}</p>
           </div>
-          <p className="text-xs text-latte-400">{currentUser?.name} · Read-only with alerts</p>
+          <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/owner/report')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
+              <FileText size={12} /> Report
+            </button>
+            <button onClick={() => { logout(); navigate('/') }} className="flex items-center gap-1.5 text-latte-300 hover:text-white text-sm border border-latte-500 px-3 py-1.5 rounded-xl transition-colors">
+              <LogOut size={14} /> Logout
+            </button>
+          </div>
         </div>
-        <button onClick={() => navigate('/owner/report')} className="flex items-center gap-1 text-xs text-latte-600 border border-latte-200 px-2.5 py-1.5 rounded-xl hover:bg-latte-50 transition-colors mr-2">
-          <FileText size={12} /> Report
-        </button>
-        <button onClick={() => { logout(); navigate('/') }} className="text-latte-400 hover:text-red-500 transition-colors">
-          <LogOut className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* Tabs */}
-      <div className="bg-white border-b border-latte-100 px-5 overflow-x-auto">
-        <div className="flex gap-1 min-w-max">
+        {/* Tab bar — same style as Admin/HR */}
+        <div className="flex gap-1 mt-3 max-w-3xl mx-auto bg-latte-800 rounded-xl p-1">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap
-                ${activeTab === tab.id ? 'border-espresso text-espresso' : 'border-transparent text-latte-400 hover:text-latte-600'}`}
+              className={`flex-1 flex items-center justify-center py-2 rounded-lg text-sm font-medium transition-all
+                ${activeTab === tab.id ? 'bg-white text-latte-700' : 'text-latte-300 hover:text-white'}`}
             >
               {tab.label}
             </button>
@@ -95,7 +93,7 @@ export default function OwnerDashboard() {
         </div>
       </div>
 
-      <div className="px-5 py-6 space-y-5 max-w-2xl mx-auto">
+      <div className="px-4 py-6 space-y-5 max-w-3xl mx-auto">
 
         {/* Anomalous login banner */}
         {mockAISignals.filter(s => s.type === 'owner-login-anomaly').map(s => (
