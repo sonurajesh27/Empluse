@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, AlertTriangle, TrendingUp, Trophy, CheckCircle2, Clock } from 'lucide-react'
+import { LogOut, AlertTriangle, TrendingUp, Trophy, CheckCircle2, Clock, BrainCircuit } from 'lucide-react'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar
@@ -9,6 +9,8 @@ import { useAuth } from '../../context/AuthContext'
 import { mockComplaints, Complaint } from '../../data/mockComplaints'
 import { mockRewards, mockFlightRisk, sectorTrendData } from '../../data/mockRewards'
 import StatusBadge from '../../components/StatusBadge'
+import AISignalCard from '../../components/AISignalCard'
+import { mockAISignals, voteAnalysis } from '../../data/mockAISignals'
 
 const SECTOR_COLORS = ['#6e4e2a', '#b08050', '#c4a07a', '#d9bfa0', '#ead9c2', '#8f6538', '#4d371e', '#2e2012']
 
@@ -39,6 +41,7 @@ export default function HRDashboard() {
     { id: 'issues',  label: 'Issues',  icon: <AlertTriangle size={16}/> },
     { id: 'risk',    label: 'Risk',    icon: <TrendingUp size={16}/> },
     { id: 'rewards', label: 'Rewards', icon: <Trophy size={16}/> },
+    { id: 'ai',      label: 'AI',      icon: <BrainCircuit size={16}/> },
   ]
 
   const sectors = Object.keys(sectorTrendData[0]).filter((k) => k !== 'week').slice(0, 4)
@@ -278,6 +281,53 @@ export default function HRDashboard() {
                   </div>
                 ))}
               </div>
+            </div>
+          </>
+        )}
+        {/* AI TAB */}
+        {tab === 'ai' && (
+          <>
+            <div className="flex items-center gap-2 mb-4">
+              <BrainCircuit size={18} className="text-latte-700" />
+              <div>
+                <h2 className="font-semibold text-latte-900">AI Intelligence Panel</h2>
+                <p className="text-latte-400 text-xs">Vote integrity & loophole signals for HR</p>
+              </div>
+            </div>
+
+            {/* Vote analysis */}
+            <div className="card mb-4">
+              <p className="font-semibold text-latte-900 mb-3">Vote Confidence Analysis</p>
+              <p className="text-xs text-latte-400 mb-3">Cross-team votes weighted 1.5x · Same-team votes weighted 0.3x</p>
+              <div className="space-y-3">
+                {voteAnalysis.map(v => (
+                  <div key={v.employeeId} className={`p-3 rounded-xl border ${v.flagged ? 'bg-orange-50 border-orange-200' : 'bg-latte-50 border-latte-100'}`}>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-sm font-medium text-espresso">{v.name}</p>
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full
+                        ${v.confidence === 'High' ? 'bg-green-100 text-green-700' :
+                          v.confidence === 'Medium' ? 'bg-amber-100 text-amber-700' :
+                          'bg-red-100 text-red-700'}`}>
+                        {v.confidence} Confidence
+                      </span>
+                    </div>
+                    <div className="flex gap-3 text-xs text-latte-500">
+                      <span>Total votes: {v.totalVotes}</span>
+                      <span>Same-team: {v.sameTeamVotes}</span>
+                      <span>Cross-team: {v.crossTeamVotes}</span>
+                    </div>
+                    <p className="text-xs font-medium text-latte-700 mt-1">Adjusted score: {v.adjustedScore}</p>
+                    {v.flagged && <p className="text-xs text-orange-600 mt-1">⚠️ Vote cluster detected — reward requires HR approval</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* HR-specific AI signals */}
+            <div className="space-y-3">
+              {mockAISignals.filter(s => s.dashboard === 'hr').map(s => (
+                <AISignalCard key={s.id} signal={s} />
+              ))}
             </div>
           </>
         )}

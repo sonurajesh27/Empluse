@@ -1,10 +1,12 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, AlertTriangle, CheckSquare, List, Activity } from 'lucide-react'
+import { LogOut, AlertTriangle, CheckSquare, List, Activity, BrainCircuit } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockComplaints, Complaint, ComplaintStatus } from '../../data/mockComplaints'
 import { SECTORS, COMPLAINT_CATEGORIES } from '../../data/sectors'
 import ComplaintCard from '../../components/ComplaintCard'
+import AISignalCard from '../../components/AISignalCard'
+import { mockAISignals } from '../../data/mockAISignals'
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
@@ -71,6 +73,7 @@ export default function AdminDashboard() {
     { id: 'queue',   label: 'Queue',   icon: <List size={16} /> },
     { id: 'heatmap', label: 'Heatmap', icon: <Activity size={16} /> },
     { id: 'alerts',  label: 'Alerts',  icon: <AlertTriangle size={16} /> },
+    { id: 'ai',      label: 'AI',      icon: <BrainCircuit size={16} /> },
   ]
 
   return (
@@ -219,6 +222,23 @@ export default function AdminDashboard() {
                 })}
               </div>
             )}
+          </>
+        )}
+        {/* AI SIGNALS */}
+        {tab === 'ai' && (
+          <>
+            <div className="flex items-center gap-2 mb-4">
+              <BrainCircuit size={18} className="text-latte-700" />
+              <div>
+                <h2 className="font-semibold text-latte-900">AI Intelligence Panel</h2>
+                <p className="text-latte-400 text-xs">Loophole detection & integrity signals for Admin</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {mockAISignals.filter(s => s.dashboard === 'admin').map(s => (
+                <AISignalCard key={s.id} signal={s} />
+              ))}
+            </div>
           </>
         )}
       </div>

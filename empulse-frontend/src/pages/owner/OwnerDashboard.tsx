@@ -5,12 +5,14 @@ import {
   LineChart, Line
 } from 'recharts'
 import {
-  ArrowLeft, ShieldAlert, Clock, ThumbsDown,
-  AlertTriangle, Eye, LogOut, TrendingDown, FileWarning, Users
+  ArrowLeft, ShieldAlert, Clock, 
+  AlertTriangle, Eye, LogOut, TrendingDown, FileWarning, Users, BrainCircuit
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockComplaints } from '../../data/mockComplaints'
 import { mockAuditLog, suppressorStats } from '../../data/mockAuditLog'
+import AISignalCard from '../../components/AISignalCard'
+import { mockAISignals } from '../../data/mockAISignals'
 
 type Tab = 'overview' | 'audit' | 'bias' | 'escalations'
 
@@ -91,6 +93,18 @@ export default function OwnerDashboard() {
       </div>
 
       <div className="px-5 py-6 space-y-5 max-w-2xl mx-auto">
+
+        {/* Anomalous login banner */}
+        {mockAISignals.filter(s => s.type === 'owner-login-anomaly').map(s => (
+          <div key={s.id} className="bg-red-50 border-l-4 border-l-red-600 border border-red-200 rounded-xl px-4 py-3 flex items-start gap-3">
+            <ShieldAlert className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-bold text-red-700">{s.title}</p>
+              <p className="text-xs text-red-600 mt-0.5">{s.detail}</p>
+              <p className="text-xs text-red-400 mt-1">{s.timestamp} · 🤖 AI-detected</p>
+            </div>
+          </div>
+        ))}
 
         {/* OVERVIEW */}
         {activeTab === 'overview' && (
@@ -356,6 +370,19 @@ export default function OwnerDashboard() {
                 <div className="flex justify-between"><span>Repeated closure of same issue</span><span>25%</span></div>
               </div>
               <p className="text-xs text-latte-400 mt-2">Above 60 = High risk of suppression. Alert sent to Owner.</p>
+            </div>
+
+            {/* Owner-specific AI signals */}
+            <div className="mt-2">
+              <div className="flex items-center gap-2 mb-3">
+                <BrainCircuit className="w-4 h-4 text-mocha" />
+                <p className="text-sm font-semibold text-espresso">AI Integrity Signals</p>
+              </div>
+              <div className="space-y-3">
+                {mockAISignals.filter(s => s.dashboard === 'owner').map(s => (
+                  <AISignalCard key={s.id} signal={s} />
+                ))}
+              </div>
             </div>
           </>
         )}
