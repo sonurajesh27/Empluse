@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft, Mic, FileText, AlertTriangle, CheckCircle2, Wrench } from 'lucide-react'
-import { mockComplaints, Complaint, ComplaintStatus } from '../../data/mockComplaints'
+import { Complaint, ComplaintStatus } from '../../data/mockComplaints'
 import { COMPLAINT_CATEGORIES } from '../../data/sectors'
 import StatusBadge from '../../components/StatusBadge'
 import ComplaintTimeline, { getTimelineSteps } from '../../components/ComplaintTimeline'
+import { getComplaintById } from '../../api/apiClient'
 
 function timeAgo(ts: string) {
   const diff = Date.now() - new Date(ts).getTime()
@@ -20,11 +21,26 @@ function formatDate(ts: string) {
 export default function ComplaintDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [complaint, setComplaint] = useState<Complaint | undefined>(
-    mockComplaints.find((c) => c.id === id)
-  )
+  const [complaint, setComplaint] = useState<Complaint | undefined>(undefined)
+  const [loading, setLoading] = useState(true)
   const [flagConfirm, setFlagConfirm] = useState(false)
   const [flagged, setFlagged] = useState(false)
+
+  useEffect(() => {
+    if (id) {
+      getComplaintById(id)
+        .then((data) => { setComplaint(data); setLoading(false) })
+        .catch(() => setLoading(false))
+    }
+  }, [id])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-latte-50 flex items-center justify-center">
+        <div className="text-latte-400 text-sm">Loading...</div>
+      </div>
+    )
+  }
 
   if (!complaint) {
     return (

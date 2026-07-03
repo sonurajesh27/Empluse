@@ -67,21 +67,9 @@ export default function SplashPage() {
         </button>
       </div>
 
-      {/* Stats strip */}
-      <div className="mt-10 flex gap-8 text-center animate-fade-in-up stagger-7 relative z-10">
-        {[
-          { val: '80+', label: 'Workers' },
-          { val: '8', label: 'Sectors' },
-          { val: '5', label: 'Languages' },
-        ].map((s) => (
-          <div key={s.label}>
-            <p className="text-xl font-bold text-latte-700 number-animate">{s.val}</p>
-            <p className="text-xs text-latte-400 mt-0.5">{s.label}</p>
-          </div>
-        ))}
-      </div>
+      {/* Stats strip removed — clean design */}
 
-      <p className="mt-8 text-latte-300 text-xs animate-fade-in-up stagger-8 relative z-10">
+      <p className="mt-10 text-latte-300 text-xs animate-fade-in-up stagger-7 relative z-10">
         Designed for Indian Manufacturing Floors · Confidential & Anonymous
       </p>
 
