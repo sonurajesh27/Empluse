@@ -11,6 +11,7 @@ import ComplaintDetail from './pages/admin/ComplaintDetail'
 import RegisterEmployee from './pages/admin/RegisterEmployee'
 import ProductionDashboard from './pages/admin/ProductionDashboard'
 import IncidentDetection from './pages/admin/IncidentDetection'
+import WorkplaceMonitoring from './pages/admin/WorkplaceMonitoring'
 import HRDashboard from './pages/hr/HRDashboard'
 import QuickPoll from './pages/hr/QuickPoll'
 import OwnerDashboard from './pages/owner/OwnerDashboard'
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/admin/register" element={<RegisterEmployee />} />
           <Route path="/admin/production" element={<ProductionDashboard />} />
           <Route path="/admin/incidents" element={<IncidentDetection />} />
+          <Route path="/admin/monitoring" element={<WorkplaceMonitoring />} />
           <Route path="/hr" element={<HRDashboard />} />
           <Route path="/hr/poll" element={<QuickPoll />} />
           <Route path="/owner" element={<OwnerDashboard />} />

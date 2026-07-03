@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, AlertTriangle, CheckSquare, List, Activity, BrainCircuit, UserPlus, Factory } from 'lucide-react'
+import { LogOut, AlertTriangle, CheckSquare, List, Activity, BrainCircuit, UserPlus, Factory, Eye } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { Complaint, ComplaintStatus } from '../../data/mockComplaints'
 import { SECTORS, COMPLAINT_CATEGORIES } from '../../data/sectors'
@@ -158,6 +158,9 @@ export default function AdminDashboard() {
           </button>
           <button onClick={() => navigate('/admin/incidents')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
             <AlertTriangle size={12} /> Incidents
+          </button>
+          <button onClick={() => navigate('/admin/monitoring')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
+            <Eye size={12} /> AI Monitor
           </button>
         </div>
         {/* Tab bar */}
