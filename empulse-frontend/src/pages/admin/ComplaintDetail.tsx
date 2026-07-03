@@ -4,6 +4,7 @@ import { ChevronLeft, Mic, FileText, AlertTriangle, CheckCircle2, Wrench } from 
 import { mockComplaints, Complaint, ComplaintStatus } from '../../data/mockComplaints'
 import { COMPLAINT_CATEGORIES } from '../../data/sectors'
 import StatusBadge from '../../components/StatusBadge'
+import ComplaintTimeline, { getTimelineSteps } from '../../components/ComplaintTimeline'
 
 function timeAgo(ts: string) {
   const diff = Date.now() - new Date(ts).getTime()
@@ -63,6 +64,12 @@ export default function ComplaintDetail() {
       </div>
 
       <div className="px-4 py-5 space-y-4">
+        {/* Resolution Timeline */}
+        <ComplaintTimeline
+          steps={getTimelineSteps(complaint)}
+          hoursOpen={complaint.hoursOpen}
+        />
+
         {/* Meta info */}
         <div className="card space-y-3">
           <div className="flex flex-wrap gap-2">

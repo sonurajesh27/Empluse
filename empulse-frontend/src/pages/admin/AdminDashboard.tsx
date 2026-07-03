@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, AlertTriangle, CheckSquare, List, Activity, BrainCircuit } from 'lucide-react'
+import { LogOut, AlertTriangle, CheckSquare, List, Activity, BrainCircuit, UserPlus, Factory } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { Complaint, ComplaintStatus } from '../../data/mockComplaints'
 import { SECTORS, COMPLAINT_CATEGORIES } from '../../data/sectors'
@@ -8,19 +8,48 @@ import ComplaintCard from '../../components/ComplaintCard'
 import AISignalCard from '../../components/AISignalCard'
 import { mockAISignals } from '../../data/mockAISignals'
 import { getComplaints, escalateComplaint as apiEscalate, resolveComplaint as apiResolve } from '../../api/apiClient'
+import ToastNotifications, { ToastItem } from '../../components/ToastNotifications'
+
+const adminToasts: ToastItem[] = [
+  { id: 'at1', title: 'SLA Breach Alert', message: 'Welding safety complaint open for 52h — escalation imminent', priority: 'critical', navigateTo: '/admin/complaint/c1' },
+  { id: 'at2', title: 'Pattern Detected', message: '4 supervisor complaints in Assembly Line A this week', priority: 'medium' },
+  { id: 'at3', title: 'New Complaint', message: 'Canteen food quality issue raised in Packaging', priority: 'low' },
+]
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const { currentUser, logout } = useAuth()
   const [tab, setTab] = useState('queue')
   const [complaints, setComplaints] = useState<Complaint[]>([])
+  const [lastUpdated, setLastUpdated] = useState(0)
+  const [highlightStats, setHighlightStats] = useState(false)
+  const prevCountRef = useRef(0)
 
   // Fetch complaints from backend
-  useEffect(() => {
-    getComplaints().then(setComplaints).catch(() => {
-      // Fallback to empty if backend is down
+  const fetchComplaints = () => {
+    getComplaints().then((data) => {
+      if (data.length !== prevCountRef.current && prevCountRef.current > 0) {
+        setHighlightStats(true)
+        setTimeout(() => setHighlightStats(false), 2000)
+      }
+      prevCountRef.current = data.length
+      setComplaints(data)
+      setLastUpdated(0)
+    }).catch(() => {
       setComplaints([])
     })
+  }
+
+  useEffect(() => {
+    fetchComplaints()
+    // Poll every 30 seconds
+    const pollInterval = setInterval(fetchComplaints, 30000)
+    // Update "last updated" counter every second
+    const tickInterval = setInterval(() => setLastUpdated((prev) => prev + 1), 1000)
+    return () => {
+      clearInterval(pollInterval)
+      clearInterval(tickInterval)
+    }
   }, [])
 
   // Filters
@@ -96,15 +125,36 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-latte-50">
+      {/* Toast notifications */}
+      <ToastNotifications items={adminToasts} onNavigate={(path) => navigate(path)} />
+
       {/* Header */}
       <div className="bg-latte-700 px-4 pt-10 pb-4 sticky top-0 z-10">
         <div className="flex items-center justify-between max-w-3xl mx-auto">
           <div>
-            <h1 className="text-white font-bold text-xl">EmPulse Admin</h1>
-            <p className="text-latte-300 text-sm">{currentUser?.name}</p>
+            <div className="flex items-center gap-2">
+              <h1 className="text-white font-bold text-xl">EmPulse Admin</h1>
+              <span className="flex items-center gap-1 text-xs text-green-400">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                Live
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-latte-300 text-sm">{currentUser?.name}</p>
+              <span className="text-latte-400 text-xs">· Updated {lastUpdated}s ago</span>
+            </div>
           </div>
           <button onClick={() => { logout(); navigate('/') }} className="flex items-center gap-1.5 text-latte-300 hover:text-white text-sm border border-latte-500 px-3 py-1.5 rounded-xl transition-colors">
             <LogOut size={14} /> Logout
+          </button>
+        </div>
+        {/* Quick nav */}
+        <div className="flex gap-2 mt-2 max-w-3xl mx-auto">
+          <button onClick={() => navigate('/admin/register')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
+            <UserPlus size={12} /> Register
+          </button>
+          <button onClick={() => navigate('/admin/production')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1 rounded-lg transition-colors">
+            <Factory size={12} /> Production
           </button>
         </div>
         {/* Tab bar */}
@@ -124,7 +174,7 @@ export default function AdminDashboard() {
         {tab === 'queue' && (
           <>
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-3 mb-4">
+            <div className={`grid grid-cols-3 gap-3 mb-4 transition-all duration-500 ${highlightStats ? 'ring-2 ring-latte-400 rounded-2xl' : ''}`}>
               <StatBox label="Open" value={totalOpen} bg="bg-red-50" color="text-red-700" />
               <StatBox label="Escalated" value={escalatedToday} bg="bg-amber-50" color="text-amber-700" />
               <StatBox label="Resolved" value={resolvedWeek} bg="bg-green-50" color="text-green-700" />

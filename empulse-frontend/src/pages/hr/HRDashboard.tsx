@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, AlertTriangle, TrendingUp, Trophy, CheckCircle2, Clock, BrainCircuit } from 'lucide-react'
+import { LogOut, AlertTriangle, TrendingUp, Trophy, CheckCircle2, Clock, BrainCircuit, MessageCircle } from 'lucide-react'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar
@@ -11,8 +11,15 @@ import { mockRewards, mockFlightRisk, sectorTrendData } from '../../data/mockRew
 import StatusBadge from '../../components/StatusBadge'
 import AISignalCard from '../../components/AISignalCard'
 import { mockAISignals, voteAnalysis } from '../../data/mockAISignals'
+import ToastNotifications, { ToastItem } from '../../components/ToastNotifications'
 
 const SECTOR_COLORS = ['#6e4e2a', '#b08050', '#c4a07a', '#d9bfa0', '#ead9c2', '#8f6538', '#4d371e', '#2e2012']
+
+const hrToasts: ToastItem[] = [
+  { id: 'ht1', title: 'Auto-Escalation', message: '2 complaints breached Admin SLA — now yours to resolve', priority: 'critical' },
+  { id: 'ht2', title: 'Flight Risk Alert', message: 'Karthik S. risk score crossed 70 — intervention needed', priority: 'medium' },
+  { id: 'ht3', title: 'Poll Results Ready', message: 'Canteen satisfaction poll completed — 65% positive', priority: 'low' },
+]
 
 export default function HRDashboard() {
   const navigate = useNavigate()
@@ -55,6 +62,9 @@ export default function HRDashboard() {
 
   return (
     <div className="min-h-screen bg-latte-50">
+      {/* Toast notifications */}
+      <ToastNotifications items={hrToasts} onNavigate={(path) => navigate(path)} />
+
       {/* Header */}
       <div className="bg-latte-700 px-4 pt-10 pb-4 sticky top-0 z-10">
         <div className="flex items-center justify-between max-w-3xl mx-auto">
@@ -62,9 +72,14 @@ export default function HRDashboard() {
             <h1 className="text-white font-bold text-xl">EmPulse HR</h1>
             <p className="text-latte-300 text-sm">{currentUser?.name}</p>
           </div>
-          <button onClick={() => { logout(); navigate('/') }} className="flex items-center gap-1.5 text-latte-300 hover:text-white text-sm border border-latte-500 px-3 py-1.5 rounded-xl transition-colors">
-            <LogOut size={14} /> Logout
-          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/hr/poll')} className="flex items-center gap-1 text-xs text-latte-300 hover:text-white border border-latte-500 px-2.5 py-1.5 rounded-xl transition-colors">
+              <MessageCircle size={12} /> Poll
+            </button>
+            <button onClick={() => { logout(); navigate('/') }} className="flex items-center gap-1.5 text-latte-300 hover:text-white text-sm border border-latte-500 px-3 py-1.5 rounded-xl transition-colors">
+              <LogOut size={14} /> Logout
+            </button>
+          </div>
         </div>
         <div className="flex gap-1 mt-3 max-w-3xl mx-auto bg-latte-800 rounded-xl p-1">
           {tabs.map((t) => (

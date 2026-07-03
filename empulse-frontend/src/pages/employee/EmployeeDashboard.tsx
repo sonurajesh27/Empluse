@@ -6,6 +6,7 @@ import { mockComplaints, Complaint } from '../../data/mockComplaints'
 import { mockRewards } from '../../data/mockRewards'
 import BottomNav from '../../components/NavBar'
 import StatusBadge from '../../components/StatusBadge'
+import PollCard from '../../components/PollCard'
 
 const LAST_SUBMITTED_DAYS_AGO = 8
 const CYCLE_DAYS = 15
@@ -146,6 +147,9 @@ export default function EmployeeDashboard() {
                 <span className="text-latte-500 text-sm">{openCount} open issues</span>
               </div>
             </div>
+
+            {/* Active Poll */}
+            <PollCard question="Is the new canteen contractor better?" expiresIn="3h" />
 
             {/* Quick action */}
             <button

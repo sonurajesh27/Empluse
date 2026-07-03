@@ -6,7 +6,7 @@ import {
 } from 'recharts'
 import {
   ArrowLeft, ShieldAlert, Clock, 
-  AlertTriangle, Eye, LogOut, TrendingDown, FileWarning, Users, BrainCircuit
+  AlertTriangle, Eye, LogOut, TrendingDown, FileWarning, Users, BrainCircuit, FileText
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockComplaints } from '../../data/mockComplaints'
@@ -71,6 +71,9 @@ export default function OwnerDashboard() {
           </div>
           <p className="text-xs text-latte-400">{currentUser?.name} · Read-only with alerts</p>
         </div>
+        <button onClick={() => navigate('/owner/report')} className="flex items-center gap-1 text-xs text-latte-600 border border-latte-200 px-2.5 py-1.5 rounded-xl hover:bg-latte-50 transition-colors mr-2">
+          <FileText size={12} /> Report
+        </button>
         <button onClick={() => { logout(); navigate('/') }} className="text-latte-400 hover:text-red-500 transition-colors">
           <LogOut className="w-4 h-4" />
         </button>
