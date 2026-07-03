@@ -285,7 +285,20 @@ export default function HRDashboard() {
                       )}
                     </div>
                     <button
-                      onClick={() => setLetterGenerated((prev) => ({ ...prev, [r.employeeId]: true }))}
+                      onClick={() => {
+                        setLetterGenerated((prev) => ({ ...prev, [r.employeeId]: true }))
+                        // Notify employee via localStorage (cross-tab communication for prototype)
+                        const notifications = JSON.parse(localStorage.getItem('empulse_notifications') || '[]')
+                        notifications.push({
+                          id: Date.now(),
+                          employeeId: r.employeeId,
+                          type: 'reward',
+                          message: `🎉 Congratulations! You received a Recognition Letter from HR.`,
+                          timestamp: new Date().toISOString(),
+                          read: false,
+                        })
+                        localStorage.setItem('empulse_notifications', JSON.stringify(notifications))
+                      }}
                       className={`text-xs px-3 py-2 rounded-xl font-medium transition-colors shrink-0
                         ${letterGenerated[r.employeeId]
                           ? 'bg-green-50 text-green-600 border border-green-200'

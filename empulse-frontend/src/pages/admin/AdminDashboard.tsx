@@ -297,6 +297,36 @@ export default function AdminDashboard() {
         {/* AI SIGNALS */}
         {tab === 'ai' && (
           <>
+            {/* Supervisor Ratings (from employee complaints) */}
+            <div className="card mb-4">
+              <p className="font-semibold text-latte-900 mb-1">Supervisor Ratings</p>
+              <p className="text-xs text-latte-400 mb-3">Anonymous aggregate from worker feedback this month</p>
+              <div className="space-y-3">
+                {[
+                  { name: 'Supervisor Kannan', sector: 'Assembly Line A', score: 2.1, complaints: 7, trend: 'down' },
+                  { name: 'Supervisor Devi', sector: 'Packaging', score: 4.2, complaints: 1, trend: 'up' },
+                  { name: 'Supervisor Raj', sector: 'Welding', score: 3.0, complaints: 3, trend: 'stable' },
+                  { name: 'Supervisor Meena', sector: 'Paint Shop', score: 3.8, complaints: 2, trend: 'up' },
+                ].map(s => (
+                  <div key={s.name} className={`flex items-center justify-between p-3 rounded-xl border ${
+                    s.score < 2.5 ? 'bg-red-50 border-red-200' : s.score < 3.5 ? 'bg-amber-50 border-amber-200' : 'bg-green-50 border-green-200'
+                  }`}>
+                    <div>
+                      <p className="text-sm font-medium text-latte-900">{s.name}</p>
+                      <p className="text-xs text-latte-500">{s.sector} · {s.complaints} complaint{s.complaints !== 1 ? 's' : ''} this month</p>
+                    </div>
+                    <div className="text-right">
+                      <p className={`text-xl font-bold ${s.score < 2.5 ? 'text-red-600' : s.score < 3.5 ? 'text-amber-600' : 'text-green-600'}`}>
+                        {s.score.toFixed(1)}
+                      </p>
+                      <p className="text-xs text-latte-400">/5.0</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-latte-400 mt-3">⚠️ Scores below 2.5 require intervention. Ratings are 100% anonymous.</p>
+            </div>
+
             <div className="flex items-center gap-2 mb-4">
               <BrainCircuit size={18} className="text-latte-700" />
               <div>

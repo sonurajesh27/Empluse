@@ -216,6 +216,26 @@ export default function EmployeeDashboard() {
         {/* REWARDS TAB */}
         {tab === 'rewards' && (
           <>
+            {/* Reward notification */}
+            {(() => {
+              const notifications = JSON.parse(localStorage.getItem('empulse_notifications') || '[]')
+              const myRewardNotif = notifications.find((n: { employeeId: string; type: string; read: boolean }) =>
+                n.employeeId === user.id && n.type === 'reward' && !n.read
+              )
+              if (!myRewardNotif) return null
+              return (
+                <div className="card bg-green-50 border-2 border-green-300 animate-fade-in-up">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">🎉</span>
+                    <div>
+                      <p className="font-bold text-green-800">Congratulations!</p>
+                      <p className="text-sm text-green-700">You received a Recognition Letter from HR.</p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
+
             {myReward ? (
               <>
                 <div className="card text-center py-6">
