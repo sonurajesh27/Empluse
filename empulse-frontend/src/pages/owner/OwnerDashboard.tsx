@@ -188,6 +188,39 @@ export default function OwnerDashboard() {
               <p className="text-sm text-latte-500 mb-4">Complaints that Admin and HR failed to resolve. These require your direct attention.</p>
             </div>
 
+            {/* HR inaction alert */}
+            {slaBreaches.filter(c => c.auditLog.some(a => a.note?.includes('HR took no action') || a.action.includes('HR inaction'))).length > 0 && (
+              <div className="bg-red-50 border-l-4 border-l-red-600 border border-red-200 rounded-xl px-4 py-3 mb-2">
+                <div className="flex items-start gap-3">
+                  <ShieldAlert className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-bold text-red-700">HR Inaction Alert</p>
+                    <p className="text-xs text-red-600 mt-0.5">
+                      <strong>Priya (HR Manager)</strong> took no action on {slaBreaches.length} complaint(s) for 72+ hours.
+                      These have been escalated directly to you.
+                    </p>
+                    <p className="text-xs text-red-500 mt-1 font-medium">SLA breached — immediate attention required.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Admin fake resolution alert */}
+            {fakeResolutions.length > 0 && (
+              <div className="bg-orange-50 border-l-4 border-l-orange-500 border border-orange-200 rounded-xl px-4 py-3 mb-4">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-bold text-orange-700">Fake Resolution Detected</p>
+                    <p className="text-xs text-orange-600 mt-0.5">
+                      <strong>Murugan A. (Admin)</strong> marked {fakeResolutions.length} complaint(s) as resolved, but workers confirmed the issues were NOT fixed.
+                      These complaints have been reopened and escalated to you.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="space-y-3">
               {mockComplaints.filter(c => c.slaBreached || c.biasFlag === 'fake-resolution').map(c => (
                 <div key={c.id} className="card border-l-4 border-l-red-400">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, AlertTriangle, TrendingUp, Trophy, CheckCircle2 } from 'lucide-react'
+import { LogOut, AlertTriangle, TrendingUp, Trophy, CheckCircle2, Clock } from 'lucide-react'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar
@@ -78,6 +78,53 @@ export default function HRDashboard() {
         {/* ISSUES TAB */}
         {tab === 'issues' && (
           <>
+            {/* Admin inaction alert banner */}
+            {(() => {
+              const adminIgnored = complaints.filter(c =>
+                c.slaBreached && c.status === 'escalated' &&
+                c.auditLog.some(a => a.action.includes('SLA Breached') || a.action.includes('Admin inaction'))
+              )
+              if (adminIgnored.length === 0) return null
+              return (
+                <div className="bg-red-50 border-l-4 border-l-red-500 border border-red-200 rounded-xl px-4 py-3">
+                  <div className="flex items-start gap-3">
+                    <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-red-700">Admin Inaction Alert</p>
+                      <p className="text-xs text-red-600 mt-0.5">
+                        <strong>{adminIgnored.length} complaint{adminIgnored.length > 1 ? 's' : ''}</strong> were ignored by Admin for 48+ hours and auto-escalated to you.
+                        These require your action within <strong>72 hours</strong> or they will escalate to the Owner.
+                      </p>
+                      <div className="mt-2 space-y-1">
+                        {adminIgnored.map(c => (
+                          <div key={c.id} className="flex items-center gap-2 text-xs text-red-500">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
+                            <span>{c.sector} — {c.subCategory} · <strong>{c.hoursOpen}h open</strong></span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
+
+            {/* SLA countdown for escalated complaints */}
+            {escalated.length > 0 && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-3">
+                <Clock className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-amber-700">Your SLA: 72 hours per complaint</p>
+                  <p className="text-xs text-amber-600 mt-0.5">
+                    If you don't act within 72 hours of receiving a complaint, it auto-escalates to the Owner.
+                    {escalated.filter(c => c.hoursOpen > 48).length > 0 && (
+                      <span className="font-bold text-red-600"> {escalated.filter(c => c.hoursOpen > 48).length} complaint(s) approaching deadline.</span>
+                    )}
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Trend chart */}
             <div className="card">
               <p className="font-semibold text-latte-900 mb-1">Sector Health Trend</p>

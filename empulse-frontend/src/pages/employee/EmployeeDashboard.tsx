@@ -79,6 +79,30 @@ export default function EmployeeDashboard() {
         {/* HOME TAB */}
         {tab === 'home' && (
           <>
+            {/* Still unresolved notice */}
+            {(() => {
+              const stillOpen = sectorComplaints.filter(c =>
+                c.workerConfirmed === false ||
+                (c.status === 'escalated' && c.hoursOpen > 24)
+              )
+              if (stillOpen.length === 0) return null
+              return (
+                <div className="bg-red-50 border-l-4 border-l-red-500 border border-red-200 rounded-xl px-4 py-3">
+                  <p className="text-sm font-bold text-red-700 mb-1">⚠️ Your complaint is still unresolved</p>
+                  {stillOpen.map(c => (
+                    <div key={c.id} className="text-xs text-red-600 mb-1">
+                      <span className="font-medium">{c.subCategory}</span> — raised {c.hoursOpen}h ago.{' '}
+                      {c.workerConfirmed === false
+                        ? 'You reported it as not fixed. It has been re-escalated.'
+                        : `Currently with ${c.status === 'escalated' ? 'HR' : 'Admin'}. Awaiting action.`
+                      }
+                    </div>
+                  ))}
+                  <p className="text-xs text-red-500 mt-1">You will be notified here when it is resolved.</p>
+                </div>
+              )
+            })()}
+
             {/* Feedback window */}
             <div className="card">
               <div className="flex justify-between items-start mb-3">
