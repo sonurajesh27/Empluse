@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Home, MessageSquare, Trophy, Plus, AlertTriangle, CheckCircle2, Clock } from 'lucide-react'
+import { Home, MessageSquare, Trophy, Plus, Clock } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
-import { mockComplaints } from '../../data/mockComplaints'
+import { mockComplaints, Complaint } from '../../data/mockComplaints'
 import { mockRewards } from '../../data/mockRewards'
 import BottomNav from '../../components/NavBar'
 import StatusBadge from '../../components/StatusBadge'
@@ -137,6 +137,12 @@ export default function EmployeeDashboard() {
         {tab === 'complaints' && (
           <>
             <h3 className="font-semibold text-latte-900">My Complaints</h3>
+
+            {/* Resolution confirmation prompts */}
+            {sectorComplaints.filter(c => c.status === 'resolved' && c.workerConfirmed === undefined).map(c => (
+              <ResolutionConfirmCard key={c.id} complaint={c} />
+            ))}
+
             {sectorComplaints.length === 0 ? (
               <div className="card text-center py-10">
                 <MessageSquare size={36} className="text-latte-300 mx-auto mb-3" />
@@ -158,8 +164,18 @@ export default function EmployeeDashboard() {
                       <span className="text-latte-400 text-xs flex items-center gap-1">
                         <Clock size={11} /> {timeAgo(c.timestamp)}
                       </span>
-                      <span className="text-latte-300 text-xs italic">Anonymous</span>
+                      <span className="text-latte-300 text-xs italic">🔒 Anonymous</span>
                     </div>
+                    {c.workerConfirmed === false && (
+                      <div className="text-xs text-red-600 bg-red-50 rounded-lg px-2 py-1.5">
+                        ⚠️ You reported this as still unresolved — complaint reopened
+                      </div>
+                    )}
+                    {c.workerConfirmed === true && (
+                      <div className="text-xs text-green-600 bg-green-50 rounded-lg px-2 py-1.5">
+                        ✅ You confirmed this was resolved
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -244,6 +260,45 @@ function StatChip({ label, value, bg }: { label: string; value: number; bg: stri
     <div className={`${bg} rounded-xl p-3 text-center`}>
       <p className="text-xl font-bold text-latte-700">{value}</p>
       <p className="text-latte-400 text-xs mt-0.5">{label}</p>
+    </div>
+  )
+}
+
+function ResolutionConfirmCard({ complaint }: { complaint: Complaint }) {
+  const [answered, setAnswered] = useState(false)
+  const [answer, setAnswer] = useState<boolean | null>(null)
+
+  if (answered) {
+    return (
+      <div className={`card border ${answer ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}`}>
+        <p className={`text-sm font-medium ${answer ? 'text-green-700' : 'text-red-700'}`}>
+          {answer ? '✅ Confirmed — marked as resolved' : '❌ Reported as still unresolved — complaint reopened & escalated'}
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="card border-2 border-amber-300 bg-amber-50">
+      <p className="text-xs font-semibold text-amber-700 mb-1">⚡ Resolution Confirmation</p>
+      <p className="text-sm text-espresso mb-1">
+        Your <strong>{complaint.subCategory}</strong> complaint was marked resolved by Admin.
+      </p>
+      <p className="text-sm font-medium text-espresso mb-3">Was this actually fixed?</p>
+      <div className="flex gap-2">
+        <button
+          onClick={() => { setAnswer(true); setAnswered(true) }}
+          className="flex-1 py-2.5 bg-green-600 text-white rounded-xl text-sm font-medium hover:bg-green-700 transition-colors"
+        >
+          ✅ Yes, it's fixed
+        </button>
+        <button
+          onClick={() => { setAnswer(false); setAnswered(true) }}
+          className="flex-1 py-2.5 bg-red-500 text-white rounded-xl text-sm font-medium hover:bg-red-600 transition-colors"
+        >
+          ❌ No, still a problem
+        </button>
+      </div>
     </div>
   )
 }

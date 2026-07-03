@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Factory, BarChart3, ShieldCheck, ChevronLeft } from 'lucide-react'
+import { Factory, BarChart3, ShieldCheck, Crown, ChevronLeft } from 'lucide-react'
 
 const roles = [
   {
@@ -31,6 +31,16 @@ const roles = [
     border: 'border-latte-200',
     iconBg: 'bg-latte-100 text-latte-700',
     roleState: 'admin',
+  },
+  {
+    icon: <Crown size={36} />,
+    title: 'Owner',
+    description: 'Full audit access · Unfiltered truth',
+    path: '/pin-login',
+    bg: 'bg-purple-50',
+    border: 'border-purple-200',
+    iconBg: 'bg-purple-100 text-purple-700',
+    roleState: 'owner',
   },
 ]
 

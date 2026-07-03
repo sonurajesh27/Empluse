@@ -2,7 +2,7 @@ export interface Employee {
   id: string
   name: string
   sector: string
-  role: 'employee' | 'hr' | 'admin'
+  role: 'employee' | 'hr' | 'admin' | 'owner'
   roleType: 'technical' | 'non-technical'
   pin: string
 }
@@ -17,5 +17,6 @@ export const mockEmployees: Employee[] = [
   { id: 'EMP-1007', name: 'Kavitha N.',  sector: 'Assembly Line B',  role: 'employee', roleType: 'non-technical', pin: '1007' },
   { id: 'EMP-1008', name: 'Muthu R.',    sector: 'Warehouse',        role: 'employee', roleType: 'non-technical', pin: '1008' },
   { id: 'EMP-2001', name: 'Priya HR',    sector: 'HR',               role: 'hr',       roleType: 'technical',     pin: '2001' },
-  { id: 'ADM-001',  name: 'Admin User',  sector: 'Management',       role: 'admin',    roleType: 'technical',     pin: '0000' },
+  { id: 'ADM-001',  name: 'Murugan A.',  sector: 'Management',       role: 'admin',    roleType: 'technical',     pin: '0000' },
+  { id: 'OWN-001',  name: 'Rajesh R.',   sector: 'Owner',            role: 'owner',    roleType: 'technical',     pin: '9999' },
 ]

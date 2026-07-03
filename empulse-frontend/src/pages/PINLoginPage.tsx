@@ -23,10 +23,13 @@ export default function PINLoginPage() {
 
   const submit = () => {
     const pinStr = pin.join('')
-    const found = mockEmployees.find((e) => e.pin === pinStr && e.role === role)
+    const found = mockEmployees.find((e) => e.pin === pinStr)
     if (found) {
       setUser({ ...found })
-      navigate(role === 'admin' ? '/admin' : '/hr')
+      if (found.role === 'admin') navigate('/admin')
+      else if (found.role === 'hr') navigate('/hr')
+      else if (found.role === 'owner') navigate('/owner')
+      else navigate('/employee')
     } else {
       setError('Incorrect PIN. Please try again.')
       setPin([])
@@ -101,7 +104,7 @@ export default function PINLoginPage() {
       </button>
 
       <p className="mt-8 text-latte-300 text-xs text-center">
-        {role === 'admin' ? 'Admin PIN: 0000' : 'HR PIN: 2001'}
+        Admin: 0000 · HR: 2001 · Owner: 9999
       </p>
     </div>
   )

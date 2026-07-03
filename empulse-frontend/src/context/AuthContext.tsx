@@ -4,7 +4,7 @@ export interface CurrentUser {
   id: string
   name: string
   sector: string
-  role: 'employee' | 'hr' | 'admin'
+  role: 'employee' | 'hr' | 'admin' | 'owner'
   roleType: 'technical' | 'non-technical'
   pin?: string
 }
